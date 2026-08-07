@@ -1,0 +1,13 @@
+{
+    "displayName": "motor-claim-frontend",
+    "appName": "motor-claim-frontend",
+    "description": "POC motor claim frontend",
+    "lastModified": "2026-07-30T07:41:56.543Z",
+    "imgSourcePath": "",
+    "version": "1.0.0",
+    "appType": "uiOnly",
+    "templateName": "blank",
+    "createDate": "2026-07-30T07:41:55.783Z",
+    "analyticsId": "1867136c-a46f-d3f4-2f0a-91968dfa51ab",
+    "createdStudioVersion": "9.3.0"
+}

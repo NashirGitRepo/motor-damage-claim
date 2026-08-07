@@ -1,0 +1,86 @@
+[
+    {
+        "id": "sd_9JQAHv3hBjo59f34",
+        "type": "tab",
+        "createdDate": "2026-08-03T12:49:21.177Z",
+        "label": "SuccessPage",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "SuccessPageComponent"
+    },
+    {
+        "id": "sd_MhGJ6HH2GQft3qe7",
+        "type": "OnInit",
+        "z": "sd_9JQAHv3hBjo59f34",
+        "viewType": "common",
+        "nodeType": "start",
+        "name": "pop claim succses page",
+        "inputVariables": [],
+        "localVariables": [],
+        "outputVariables": [],
+        "pageVariables": [],
+        "functionName": "popClaimSuccsesPage",
+        "category": "Lifecycle Events",
+        "x": 30,
+        "y": 30,
+        "wires": [
+            [
+                "sd_eFLFDKrYY6Opxqey"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "SuccessPageComponent"
+    },
+    {
+        "id": "sd_juwOf9X1GxYLxKNf",
+        "type": "GetDialogData",
+        "z": "sd_9JQAHv3hBjo59f34",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "Get Dialog data ",
+        "dialogDataMapping": "this.page.result",
+        "functionName": "getDialogData",
+        "category": "Dialog",
+        "x": 385,
+        "y": 40,
+        "wires": [
+            []
+        ],
+        "__ssdTypeInputs__": {
+            "dialogDataMapping": {
+                "type": "this.page",
+                "value": "result",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "SuccessPageComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_eFLFDKrYY6Opxqey",
+        "type": "Script",
+        "z": "sd_9JQAHv3hBjo59f34",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.local.imageSRC = 'data:image/png;base64,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';",
+        "functionName": "sd_eFLFDKrYY6Opxqey",
+        "category": "Function",
+        "x": 200,
+        "y": 40,
+        "wires": [
+            [
+                "sd_juwOf9X1GxYLxKNf"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "SuccessPageComponent",
+        "generated": true
+    }
+]

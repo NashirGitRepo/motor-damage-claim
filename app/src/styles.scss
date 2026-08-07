@@ -1,0 +1,77 @@
+/*Importing default angular material css theme. */
+
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "nDefaults.scss";
+
+body{
+    margin: 0;
+}
+.form-container {
+    width: 350px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #d6e4f0;
+    border-radius: 10px;
+    background-color: #f5f9ff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.submit-btn {
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+}
+
+.submit-btn:hover {
+    background-color: #1565c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(25, 118, 210, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.fetch-btn {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: !important 5px 10px;
+    height: 42px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(25,118,210,0.25);
+}
+
+.fetch-btn:hover {
+    background-color: #1565c0;
+    box-shadow: 0 4px 10px rgba(25,118,210,0.35);
+}
+
+.form-row{
+    display:  flex;
+    width:  100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mat-card,
+mat-card {
+  box-shadow: none !important;
+  border: none !important;
+}

@@ -1,0 +1,92 @@
+<mat-card>
+  <mat-card-title>Claim Intimation Form</mat-card-title>
+
+  <mat-card-content>
+    <form class="form-container">
+      <form (ngSubmit)="fetchPolicyDetails()">
+        <div fxLayout="row wrap" class="form-row" fxLayoutAlign="start stretch" [fxShow]="true">
+          <mat-form-field color="primary" class="custom-input" [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+            <input matInput [(ngModel)]="page.policyNumber" name="policyNumber" placeholder="Enter policy number.." [required]="true">
+
+          </mat-form-field><mat-error align *ngIf="page.policyNumberError">{{page.policyNumberError}}</mat-error><button mat-button class="fetch-btn" (click)="fetchPolicyDetails()">Fetch</button>
+        </div>
+      </form>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
+        <mat-form-field color="primary" [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+          <input matInput [(ngModel)]="page.registrationNumber" name="registrationNumber" placeholder="Vehicle Registration " [required]="false" readonly="true" [disabled]="true">
+
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
+        <mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+          <input matInput [(ngModel)]="page.vehicleType" name="vehicleType" placeholder="Vehicle Type" [required]="true" readonly="true" [disabled]="true">
+
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
+        <mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+          <input matInput [(ngModel)]="page.price" name="price" placeholder="Idv (Rs)" [required]="false" readonly="true" [disabled]="true">
+
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
+        <div fxLayout="row wrap" class="form-row" fxLayoutAlign="start stretch" [fxShow]="true">
+          <mat-form-field color="primary" [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+            <input matInput [(ngModel)]="page.customerName" name="customerName" placeholder="Customer Name" [required]="true" readonly="true" [disabled]="true">
+
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <div style="border:1px solid #454545; padding:0px; margin-top:10px; margin-bottom:10px;" *ngIf="page.showContent">
+
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
+        <mat-form-field [appearance]="&apos;legacy&apos;">
+          <mat-label>Date of Loss</mat-label>
+          <input matInput placeholder="Date Of Loss" [matDatepicker]="picker" [(ngModel)]="page.dateofLoss" name="dateofLoss" [required]="true" [disabled]="true">
+          <mat-datepicker-toggle matSuffix [for]="picker" disabled="false"></mat-datepicker-toggle>
+          <mat-datepicker #picker [disabled]="false" startView="multi-year" touchUi="true"></mat-datepicker>
+
+        </mat-form-field><mat-error align *ngIf="page.dateofLossError">{{page.dateofLossError}}</mat-error>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;">
+          <mat-label>Select Loss Type</mat-label>
+          <mat-select [(value)]="page.lossType" placeholder="Select Loss Type" [required]="true">
+            <mat-option [value]="&apos;100&apos;" disabled="false">Accidentail Damage - Own Vehicle</mat-option><mat-option [value]="&apos;10&apos;" disabled="false">Windshileld / Glass Only</mat-option><mat-option [value]="&apos;100&apos;" disabled="false">Fire Damage</mat-option>
+          </mat-select>
+
+        </mat-form-field><mat-error align *ngIf="page.lossTypeError">{{page.lossTypeError}}</mat-error></div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;">
+          <mat-label>Select Damage Group</mat-label>
+          <mat-select [(value)]="page.damageGroup" placeholder="Select Damage Group" [required]="true">
+            <mat-option [value]="&apos;PG-METAL&apos;" disabled="false">Metal body panels</mat-option><mat-option [value]="&apos;PG-PLASTIC&apos;" disabled="false">Plastic / fiber parts</mat-option><mat-option [value]="&apos;PG-GLASS&apos;" disabled="false">Glass</mat-option><mat-option [value]="&apos;PG-RUBBER&apos;" disabled="false">Rubber / nylon / battery</mat-option>
+          </mat-select>
+
+        </mat-form-field><mat-error align *ngIf="page.damageGroupError">{{page.damageGroupError}}</mat-error></div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
+        <mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+          <input matInput [(ngModel)]="page.estimatedPartsCost" name="estimatedPartsCost" placeholder="Estimated Parts Costs" [required]="true">
+          <mat-label>Estimated Parts Costs</mat-label>
+        </mat-form-field><mat-error align *ngIf="page.estimatedPartsCostError">{{page.estimatedPartsCostError}}</mat-error>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;">
+          <mat-label>Select Garage Type</mat-label>
+          <mat-select [(value)]="page.garageType" placeholder="Select Garage Type" [required]="true">
+            <mat-option [value]="&apos;network&apos;" disabled="false">Network</mat-option><mat-option [value]="&apos;non-network&apos;" disabled="false">Non-network</mat-option>
+          </mat-select>
+
+        </mat-form-field><mat-error align *ngIf="page.garageTypeError">{{page.garageTypeError}}</mat-error></div>
+      <div fxLayout="row wrap" fxLayoutGap="10 px" fxLayoutAlign="start center" [fxShow]="page.showContent"><mat-checkbox [(ngModel)]="page.firFilled" name="firFilled" [checked]="false" color="primary" [required]="false">FIR Filled</mat-checkbox></div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-checkbox [(ngModel)]="page.validDrivingLicense" name="validDrivingLicense" color="primary" [required]="false">Valid Driving License </mat-checkbox></div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-form-field color="primary" [floatLabel]="&apos;auto&apos;">
+          <mat-label>Description of Loss</mat-label>
+          <textarea matInput [(ngModel)]="page.description" name="description" placeholder="Text Area" [required]="true"></textarea>
+        </mat-form-field><mat-error align *ngIf="page.descriptionError">{{page.descriptionError}}</mat-error></div>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><button mat-button class="submit-btn" (click)="submitBtnClick()" type="submit">Submit</button></div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions></mat-card-actions>
+</mat-card>

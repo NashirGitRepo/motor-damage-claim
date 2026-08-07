@@ -1,0 +1,19 @@
+{
+    "routes": [
+        {
+            "path": "intimationform",
+            "component": "claim_intimation_formComponent",
+            "pathMatch": "full"
+        },
+        {
+            "path": "''",
+            "redirectTo": "intimationform",
+            "pathMatch": "full",
+            "default": true
+        },
+        {
+            "path": "**",
+            "component": "PageNotFoundComponent"
+        }
+    ]
+}

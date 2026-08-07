@@ -1,0 +1,300 @@
+{
+    "9a5c9399-726f-9af7-cc76-781e85886e1d": {
+        "paletteKey": "ad-card",
+        "isAdvancedComponent": true,
+        "commentid": null,
+        "designerReference": [
+            {
+                "_key": "componentLabel",
+                "_value": "Card",
+                "_type": "kv",
+                "_attrDef": "p",
+                "_useAsLabel": true
+            },
+            {
+                "_key": "style",
+                "_value": "",
+                "_type": "kv",
+                "_attrDef": "p"
+            },
+            {
+                "_key": "class",
+                "_value": "",
+                "_type": "dav",
+                "_attrDef": "p"
+            },
+            {
+                "_key": "tabindex",
+                "_value": "",
+                "_type": "kv",
+                "_attrDef": "p"
+            }
+        ],
+        "47d94d4a-c1a2-34f0-cb51-214c057dda6d": {
+            "paletteKey": "ng-card-content",
+            "parentEditorKey": "9a5c9399-726f-9af7-cc76-781e85886e1d",
+            "isAdvancedChildComponent": true,
+            "commentid": null,
+            "designerReference": [
+                {
+                    "_key": "style",
+                    "_value": "",
+                    "_type": "kv",
+                    "_attrDef": "p"
+                },
+                {
+                    "_key": "class",
+                    "_value": "",
+                    "_type": "dav",
+                    "_attrDef": "p"
+                },
+                {
+                    "_key": "align",
+                    "_value": "left",
+                    "_type": "kv",
+                    "_attrDef": "p"
+                }
+            ],
+            "23df005d-1649-b717-b7d0-d48288eb5d7b": {
+                "paletteKey": "Html5",
+                "parentEditorKey": "47d94d4a-c1a2-34f0-cb51-214c057dda6d",
+                "isAdvancedComponent": true,
+                "commentid": null,
+                "designerReference": [
+                    {
+                        "_key": "style",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p"
+                    },
+                    {
+                        "_key": "class",
+                        "_value": "",
+                        "_type": "dav",
+                        "_attrDef": "p"
+                    },
+                    {
+                        "_key": "htmlElement",
+                        "_value": "div",
+                        "_type": "dav",
+                        "_attrDef": "p",
+                        "_useAsLabel": true
+                    },
+                    {
+                        "_key": "tagType",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "name",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "sandbox",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "src",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "srcdoc",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "width",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "[autoplay]",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "[loop]",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "data",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "audioSource",
+                        "_value": [],
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "videoSource",
+                        "_value": [],
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "audioDatasource",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "audioSrc",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "audioType",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "videoDatasource",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "videoSrc",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "videoType",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "(audioplay)",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "(videoplay)",
+                        "_value": "",
+                        "_type": "a",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "(audiopause)",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "(videopause)",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "(audioended)",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    },
+                    {
+                        "_key": "(videoended)",
+                        "_value": "",
+                        "_type": "kv",
+                        "_attrDef": "p",
+                        "_visibility": false
+                    }
+                ],
+                "0cb05e40-512c-a2c9-4606-642a9b55f497": {
+                    "paletteKey": "html-editor",
+                    "parentEditorKey": "23df005d-1649-b717-b7d0-d48288eb5d7b",
+                    "isAdvancedChildComponent": true,
+                    "commentid": null,
+                    "designerReference": [
+                        {
+                            "_key": "style",
+                            "_value": "",
+                            "_type": "kv",
+                            "_attrDef": "p"
+                        },
+                        {
+                            "_key": "class",
+                            "_value": "",
+                            "_type": "dav",
+                            "_attrDef": "p"
+                        },
+                        {
+                            "_key": "html",
+                            "_value": "<div style=\"max-width:500px; margin:20px auto; border:1px solid #d9e9d9; border-radius:8px; background:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.08); font-family:Arial,sans-serif; overflow:hidden;\"\r\n*ngIf=\"page.result?.success; else elseBlock\"\r\n>\r\n\r\n    <!-- Success Header -->\r\n    <div style=\"background:#eaf8ea; color:#2e7d32; padding:12px; text-align:center; font-size:18px; font-weight:bold; border-bottom:1px solid #d9e9d9;\">\r\n        <img src=\"https://cdn-icons-png.flaticon.com/512/7518/7518748.png\"\r\n             alt=\"success-image\"\r\n             style=\"width:22px;height:22px;vertical-align:middle;margin-right:8px;\">\r\n        Claim Registered Successfully!\r\n    </div>\r\n\r\n    <!-- Claim Details -->\r\n    <div style=\"padding:18px;\">\r\n\r\n        <div style=\"display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;\">\r\n            <span style=\"font-weight:bold;color:#555;\">Claim ID</span>\r\n            <span>{{page.result?.data?.claimId}}</span>\r\n        </div>\r\n\r\n        <div style=\"display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;\">\r\n            <span style=\"font-weight:bold;color:#555;\">Status</span>\r\n            <span>{{page.result?.data?.status}}</span>\r\n        </div>\r\n\r\n        <div style=\"display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;\">\r\n            <span style=\"font-weight:bold;color:#555;\">Indicative Net Payable (₹)</span>\r\n            <span>₹ {{page.result?.data?.netPayable}}</span>\r\n        </div>\r\n\r\n        <div style=\"display:flex;justify-content:space-between;padding:8px 0;\">\r\n            <span style=\"font-weight:bold;color:#555;\">SLA</span>\r\n            <span>{{page.result?.data?.sla}} Hours</span>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    <!-- Footer -->\r\n    <div style=\"text-align:center;padding:15px;\">\r\n       <button\r\n    style=\"background:#6a1b9a;color:#fff;border:none;padding:10px 24px;border-radius:5px;font-size:14px;cursor:pointer;\"\r\n    onclick=\"window.location.reload();\">\r\n    Go to Dashboard\r\n</button>\r\n    </div>\r\n\r\n</div>\r\n\r\n<ng-template #elseBlock>\r\n        <div style=\"background:#fdecea; color:#c62828; padding:12px; text-align:center; font-size:18px; font-weight:bold; border-bottom:1px solid #f5c6cb;\">\r\n        ❌ Claim Registration Failed\r\n    </div>\r\n\r\n    <div style=\"padding:18px; text-align:center;\">\r\n\r\n        <p style=\"margin:0; color:#555;\">\r\n            {{ page.result?.message || 'Unable to register claim. Please try again.' }}\r\n        </p>\r\n\r\n    </div>\r\n\r\n    <div style=\"text-align:center;padding:15px;\">\r\n        <button\r\n            style=\"background:#d32f2f;color:#fff;border:none;padding:10px 24px;border-radius:5px;font-size:14px;cursor:pointer;\"\r\n           onclick=\"window.location.reload()\"\r\n           >\r\n            Try Again\r\n        </button>\r\n    </div>\r\n</div>\r\n</ng-template>",
+                            "_type": "a",
+                            "_attrDef": "p"
+                        }
+                    ]
+                }
+            }
+        },
+        "b63d3fd2-a50f-4996-f784-624360e0586e": {
+            "paletteKey": "ng-card-action",
+            "parentEditorKey": "9a5c9399-726f-9af7-cc76-781e85886e1d",
+            "isAdvancedChildComponent": true,
+            "commentid": null,
+            "designerReference": [
+                {
+                    "_key": "style",
+                    "_value": "",
+                    "_type": "kv",
+                    "_attrDef": "p"
+                },
+                {
+                    "_key": "class",
+                    "_value": "",
+                    "_type": "dav",
+                    "_attrDef": "p"
+                },
+                {
+                    "_key": "align",
+                    "_value": "",
+                    "_type": "kv",
+                    "_attrDef": "p"
+                }
+            ]
+        }
+    }
+}

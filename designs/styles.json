@@ -1,0 +1,9 @@
+{
+    "classes": [
+        "form-container",
+        "submit-btn",
+        "fetch-btn",
+        "form-row",
+        "mat-card"
+    ]
+}

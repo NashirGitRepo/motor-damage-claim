@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-content align="left">
+    <div>
+      <div style="max-width:500px; margin:20px auto; border:1px solid #d9e9d9; border-radius:8px; background:#ffffff; box-shadow:0 2px 8px rgba(0,0,0,0.08); font-family:Arial,sans-serif; overflow:hidden;" *ngIf="page.result?.success; else elseBlock">
+
+        <!-- Success Header -->
+        <div style="background:#eaf8ea; color:#2e7d32; padding:12px; text-align:center; font-size:18px; font-weight:bold; border-bottom:1px solid #d9e9d9;">
+          <img src="https://cdn-icons-png.flaticon.com/512/7518/7518748.png" alt="success-image" style="width:22px;height:22px;vertical-align:middle;margin-right:8px;">
+          Claim Registered Successfully!
+        </div>
+
+        <!-- Claim Details -->
+        <div style="padding:18px;">
+
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:bold;color:#555;">Claim ID</span>
+            <span>{{page.result?.data?.claimId}}</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:bold;color:#555;">Status</span>
+            <span>{{page.result?.data?.status}}</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:bold;color:#555;">Indicative Net Payable (&#x20B9;)</span>
+            <span>&#x20B9; {{page.result?.data?.netPayable}}</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;padding:8px 0;">
+            <span style="font-weight:bold;color:#555;">SLA</span>
+            <span>{{page.result?.data?.sla}} Hours</span>
+          </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align:center;padding:15px;">
+          <button style="background:#6a1b9a;color:#fff;border:none;padding:10px 24px;border-radius:5px;font-size:14px;cursor:pointer;" onclick="window.location.reload();">
+            Go to Dashboard
+          </button>
+        </div>
+
+      </div>
+
+      <ng-template #elseBlock>
+        <div style="background:#fdecea; color:#c62828; padding:12px; text-align:center; font-size:18px; font-weight:bold; border-bottom:1px solid #f5c6cb;">
+          &#x274C; Claim Registration Failed
+        </div>
+
+        <div style="padding:18px; text-align:center;">
+
+          <p style="margin:0; color:#555;">
+            {{ page.result?.message || &apos;Unable to register claim. Please try again.&apos; }}
+          </p>
+
+        </div>
+
+        <div style="text-align:center;padding:15px;">
+          <button style="background:#d32f2f;color:#fff;border:none;padding:10px 24px;border-radius:5px;font-size:14px;cursor:pointer;" onclick="window.location.reload()">
+            Try Again
+          </button>
+        </div>
+
+      </ng-template>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions></mat-card-actions>
+</mat-card>
