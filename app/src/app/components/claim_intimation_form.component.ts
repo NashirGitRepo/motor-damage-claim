@@ -145,8 +145,10 @@ export class claim_intimation_formComponent {
     try {
       const page = this.page;
       let policyNumber = page.policyNumber;
-      console.log(`http://localhost:8081/api/policy/${policyNumber}`);
-      bh.local.url = `http://localhost:8081/api/policy/${policyNumber}`;
+      console.log(
+        `https://motordamageclaimbackend.neutrinos-apps.com/api/policy/${policyNumber}`
+      );
+      bh.local.url = `https://motordamageclaimbackend.neutrinos-apps.com/api/policy/${policyNumber}`;
 
       page.policyNumberError = null;
       bh = this.fetchPolicyGetRequestInBlock(bh);
@@ -249,7 +251,8 @@ export class claim_intimation_formComponent {
       ) {
         return;
       }
-      bh.local.url = 'http://localhost:8081/api/claim';
+      bh.local.url =
+        'https://motordamageclaimbackend.neutrinos-apps.com/api/claim';
       console.log('api request body: ', bh.local.requestBody);
       bh = this.sd_0bqkCP4Lfzd1QZLB(bh);
       //appendnew_next_sd_0MAEKkKdzwhSv3bL

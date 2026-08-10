@@ -446,7 +446,6 @@
                             "paletteKey": "ng-mat-error",
                             "parentEditorKey": "3f36eea9-00ef-325e-79de-2c9f91e7e36e",
                             "isAdvancedComponent": true,
-                            "isCommented": "false",
                             "commentid": null,
                             "designerReference": [
                                 {
@@ -4168,32 +4167,6 @@
                     }
                 }
             }
-        },
-        "529e7a59-6f4e-bb13-0ff8-29ffe1ef70c8": {
-            "paletteKey": "ng-card-action",
-            "parentEditorKey": "20d70505-5a5f-6c70-d41e-75c0df7c4e0f",
-            "isAdvancedChildComponent": true,
-            "commentid": null,
-            "designerReference": [
-                {
-                    "_key": "style",
-                    "_value": "",
-                    "_type": "kv",
-                    "_attrDef": "p"
-                },
-                {
-                    "_key": "class",
-                    "_value": "",
-                    "_type": "dav",
-                    "_attrDef": "p"
-                },
-                {
-                    "_key": "align",
-                    "_value": "",
-                    "_type": "kv",
-                    "_attrDef": "p"
-                }
-            ]
         }
     }
 }
