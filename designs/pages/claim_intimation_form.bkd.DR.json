@@ -2261,7 +2261,7 @@
                             },
                             {
                                 "_key": "datasource",
-                                "_value": "",
+                                "_value": "page.lossTypeRecords",
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
@@ -2294,13 +2294,13 @@
                             },
                             {
                                 "_key": "optionValue",
-                                "_value": "",
+                                "_value": "option.Loss_Code",
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
                             {
                                 "_key": "optionView",
-                                "_value": "",
+                                "_value": "{{option.Loss_Type}}",
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
@@ -2373,32 +2373,7 @@
                             },
                             {
                                 "_key": "selectCustomOption",
-                                "_value": [
-                                    {
-                                        "input1": "Accidentail Damage - Own Vehicle",
-                                        "input2": "100",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    },
-                                    {
-                                        "input1": "Windshileld / Glass Only",
-                                        "input2": "10",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    },
-                                    {
-                                        "input1": "Fire Damage",
-                                        "input2": "100",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    }
-                                ],
+                                "_value": [],
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
@@ -2568,6 +2543,7 @@
                         "paletteKey": "NG-Select",
                         "parentEditorKey": "efefad43-d764-b31d-882e-902646ed5f79",
                         "isAdvancedComponent": true,
+                        "isCommented": "false",
                         "commentid": null,
                         "designerReference": [
                             {
@@ -2609,7 +2585,7 @@
                             },
                             {
                                 "_key": "datasource",
-                                "_value": "",
+                                "_value": "page.partGroup",
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
@@ -2642,13 +2618,13 @@
                             },
                             {
                                 "_key": "optionValue",
-                                "_value": "",
+                                "_value": "option.Part_Group_Code",
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
                             {
                                 "_key": "optionView",
-                                "_value": "",
+                                "_value": "{{option.Part_Group}}",
                                 "_type": "a",
                                 "_attrDef": "p"
                             },
@@ -2668,7 +2644,8 @@
                                 "_key": "[(value)]",
                                 "_value": "page.damageGroup",
                                 "_type": "kv",
-                                "_attrDef": "p"
+                                "_attrDef": "p",
+                                "_customAttributeFlag": "flowpicker"
                             },
                             {
                                 "_key": "[required]",
@@ -2721,40 +2698,7 @@
                             },
                             {
                                 "_key": "selectCustomOption",
-                                "_value": [
-                                    {
-                                        "input1": "Metal body panels",
-                                        "input2": "PG-METAL",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    },
-                                    {
-                                        "input1": "Plastic / fiber parts",
-                                        "input2": "PG-PLASTIC",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    },
-                                    {
-                                        "input1": "Glass",
-                                        "input2": "PG-GLASS",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    },
-                                    {
-                                        "input1": "Rubber / nylon / battery",
-                                        "input2": "PG-RUBBER",
-                                        "toggle": {
-                                            "toggleData": [],
-                                            "selected": "false"
-                                        }
-                                    }
-                                ],
+                                "_value": [],
                                 "_type": "a",
                                 "_attrDef": "p"
                             },

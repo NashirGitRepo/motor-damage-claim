@@ -43,7 +43,7 @@
         "globalVariables": [],
         "functionName": "sd_kXKGLk1w37hPFONv",
         "category": "Function",
-        "x": 285,
+        "x": 685,
         "y": 40,
         "wires": [
             []
@@ -107,6 +107,7 @@
         "nodeType": "flow",
         "name": "Fetch Policy Get Request In Block",
         "method": "get",
+        "methodMapping": "",
         "methodMappingObj": {},
         "urlMapping": "bh.local.url",
         "urlMappingObj": {
@@ -114,11 +115,14 @@
             "mapVarValue": "url"
         },
         "ret": "json",
+        "retMapping": "",
         "retMappingObj": {},
         "observe": "",
+        "observeMapping": "",
         "observeMappingObj": {},
         "reportProgress": false,
         "withCreds": false,
+        "reqBody": "",
         "reqBodyObj": {
             "mapVarType": "bh.local",
             "mapVarValue": ""
@@ -130,9 +134,11 @@
         },
         "headers": {},
         "headersObj": [],
+        "headerMapping": "",
         "headerMappingObj": {},
         "params": {},
         "paramsObj": [],
+        "paramMapping": "",
         "paramMappingObj": {},
         "functionName": "fetchPolicyGetRequestInBlock",
         "category": "HTTP",
@@ -476,10 +482,280 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "page.showContent = false;",
+        "script": "page.showContent = false;\nbh.local.lossCodeUrl=\"https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9\";\nbh.local.requestBody={\n  \"pageNumber\": 0,\n  \"pageSize\": 100,\n  \"filter\": {}\n}",
         "functionName": "sd_yT6rnZXFFNl3M5ml",
         "category": "Function",
-        "x": 140,
+        "x": 145,
+        "y": 40,
+        "wires": [
+            [
+                "sd_Wr9Ho0vseyisXZHa"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_Wr9Ho0vseyisXZHa",
+        "type": "HttpRequest",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "client-pages",
+        "nodeType": "flow",
+        "name": "",
+        "method": "post",
+        "methodMappingObj": {},
+        "urlMapping": "bh.local.lossCodeUrl",
+        "urlMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "lossCodeUrl"
+        },
+        "ret": "json",
+        "retMappingObj": {},
+        "observe": "",
+        "observeMappingObj": {},
+        "reportProgress": false,
+        "withCreds": false,
+        "reqBody": "bh.local.requestBody",
+        "reqBodyObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "requestBody"
+        },
+        "resultMapping": "bh.local.result",
+        "resultMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "result"
+        },
+        "headers": {
+            "Cookie": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE",
+            "Postman-Token": "<calculated when request is sent>",
+            "Content-Length": "<calculated when request is sent>",
+            "Host": "<calculated when request is sent>",
+            "User-Agent": "PostmanRuntime/7.56.0",
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Content-Type": "application/json",
+            "token": "50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3"
+        },
+        "headersObj": [
+            {
+                "key": "Cookie",
+                "defaultValue": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE"
+            },
+            {
+                "key": "Postman-Token",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Content-Length",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Host",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "User-Agent",
+                "defaultValue": "PostmanRuntime/7.56.0"
+            },
+            {
+                "key": "Accept",
+                "defaultValue": "*/*"
+            },
+            {
+                "key": "Accept-Encoding",
+                "defaultValue": "gzip, deflate, br"
+            },
+            {
+                "key": "Connection",
+                "defaultValue": "keep-alive"
+            },
+            {
+                "key": "Content-Type",
+                "defaultValue": "application/json"
+            },
+            {
+                "key": "token",
+                "defaultValue": "50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3"
+            }
+        ],
+        "headerMappingObj": {},
+        "params": {},
+        "paramsObj": [],
+        "paramMappingObj": {},
+        "functionName": "sd_Wr9Ho0vseyisXZHa",
+        "category": "HTTP",
+        "x": 245,
+        "y": 40,
+        "wires": [
+            [
+                "sd_0PAYztpMzag6eRiT"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_0PAYztpMzag6eRiT",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(\"result=========>\",bh.local.result);\n\npage.lossTypeRecords = bh.local.result?.records || [];",
+        "functionName": "sd_0PAYztpMzag6eRiT",
+        "category": "Function",
+        "x": 345,
+        "y": 40,
+        "wires": [
+            [
+                "sd_YdSEN5cNt9Nb4OaH"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_YdSEN5cNt9Nb4OaH",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.local.partGroupUrl=\"https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/ae5e2b99-23c4-4ef5-b953-0d63a8e220df/63a1af97-18b4-4af1-b238-b35b0baf44ce\";\nbh.local.requestBodyForPartGroup={\n  \"pageNumber\": 0,\n  \"pageSize\": 100,\n  \"filter\": {}\n}",
+        "functionName": "sd_YdSEN5cNt9Nb4OaH",
+        "category": "Function",
+        "x": 440,
+        "y": 40,
+        "wires": [
+            [
+                "sd_Ut2s5rmDrq4xCc39"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_Ut2s5rmDrq4xCc39",
+        "type": "HttpRequest",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "client-pages",
+        "nodeType": "flow",
+        "name": "",
+        "method": "post",
+        "methodMappingObj": {},
+        "urlMapping": "bh.local.partGroupUrl",
+        "urlMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "partGroupUrl"
+        },
+        "ret": "json",
+        "retMappingObj": {},
+        "observe": "",
+        "observeMappingObj": {},
+        "reportProgress": false,
+        "withCreds": false,
+        "reqBody": "bh.local.requestBodyForPartGroup",
+        "reqBodyObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "requestBodyForPartGroup"
+        },
+        "resultMapping": "bh.local.resultForPartGroup",
+        "resultMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "resultForPartGroup"
+        },
+        "headers": {
+            "Cookie": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE",
+            "Postman-Token": "<calculated when request is sent>",
+            "Content-Length": "<calculated when request is sent>",
+            "Host": "<calculated when request is sent>",
+            "User-Agent": "PostmanRuntime/7.56.0",
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Content-Type": "application/json",
+            "token": "50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3"
+        },
+        "headersObj": [
+            {
+                "key": "Cookie",
+                "defaultValue": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE"
+            },
+            {
+                "key": "Postman-Token",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Content-Length",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Host",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "User-Agent",
+                "defaultValue": "PostmanRuntime/7.56.0"
+            },
+            {
+                "key": "Accept",
+                "defaultValue": "*/*"
+            },
+            {
+                "key": "Accept-Encoding",
+                "defaultValue": "gzip, deflate, br"
+            },
+            {
+                "key": "Connection",
+                "defaultValue": "keep-alive"
+            },
+            {
+                "key": "Content-Type",
+                "defaultValue": "application/json"
+            },
+            {
+                "key": "token",
+                "defaultValue": "50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3"
+            }
+        ],
+        "headerMappingObj": {},
+        "params": {},
+        "paramsObj": [],
+        "paramMappingObj": {},
+        "functionName": "sd_Ut2s5rmDrq4xCc39",
+        "category": "HTTP",
+        "x": 525,
+        "y": 40,
+        "wires": [
+            [
+                "sd_EMVaGfg9UubCkEXt"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_EMVaGfg9UubCkEXt",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(\"result data PArt=========>\",bh.local.resultForPartGroup);\n\npage.partGroup = bh.local.resultForPartGroup?.records || [];",
+        "functionName": "sd_EMVaGfg9UubCkEXt",
+        "category": "Function",
+        "x": 605,
         "y": 40,
         "wires": [
             [

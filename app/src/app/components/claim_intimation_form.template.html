@@ -54,14 +54,18 @@
       <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;">
           <mat-label>Select Loss Type</mat-label>
           <mat-select [(value)]="page.lossType" placeholder="Select Loss Type" [required]="true">
-            <mat-option [value]="&apos;100&apos;" disabled="false">Accidentail Damage - Own Vehicle</mat-option><mat-option [value]="&apos;10&apos;" disabled="false">Windshileld / Glass Only</mat-option><mat-option [value]="&apos;100&apos;" disabled="false">Fire Damage</mat-option>
+            <ng-template ngFor let-option [ngForOf]="page.lossTypeRecords" let-i="index">
+              <mat-option [value]="option.Loss_Code">{{option.Loss_Type}}</mat-option>
+            </ng-template>
           </mat-select>
 
         </mat-form-field><mat-error align *ngIf="page.lossTypeError">{{page.lossTypeError}}</mat-error></div>
       <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent"><mat-form-field [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;">
           <mat-label>Select Damage Group</mat-label>
           <mat-select [(value)]="page.damageGroup" placeholder="Select Damage Group" [required]="true">
-            <mat-option [value]="&apos;PG-METAL&apos;" disabled="false">Metal body panels</mat-option><mat-option [value]="&apos;PG-PLASTIC&apos;" disabled="false">Plastic / fiber parts</mat-option><mat-option [value]="&apos;PG-GLASS&apos;" disabled="false">Glass</mat-option><mat-option [value]="&apos;PG-RUBBER&apos;" disabled="false">Rubber / nylon / battery</mat-option>
+            <ng-template ngFor let-option [ngForOf]="page.partGroup" let-i="index">
+              <mat-option [value]="option.Part_Group_Code">{{option.Part_Group}}</mat-option>
+            </ng-template>
           </mat-select>
 
         </mat-form-field><mat-error align *ngIf="page.damageGroupError">{{page.damageGroupError}}</mat-error></div>

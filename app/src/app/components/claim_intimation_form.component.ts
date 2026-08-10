@@ -94,11 +94,130 @@ export class claim_intimation_formComponent {
     try {
       const page = this.page;
       page.showContent = false;
-      bh = this.sd_kXKGLk1w37hPFONv(bh);
+      bh.local.lossCodeUrl =
+        'https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9';
+      bh.local.requestBody = {
+        pageNumber: 0,
+        pageSize: 100,
+        filter: {},
+      };
+      bh = this.sd_Wr9Ho0vseyisXZHa(bh);
       //appendnew_next_sd_yT6rnZXFFNl3M5ml
       return bh;
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_yT6rnZXFFNl3M5ml');
+    }
+  }
+
+  async sd_Wr9Ho0vseyisXZHa(bh) {
+    try {
+      let requestOptions = {
+        url: bh.local.lossCodeUrl,
+        method: 'post',
+        responseType: 'json',
+        headers: {
+          Cookie:
+            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
+          'Postman-Token': '<calculated when request is sent>',
+          'Content-Length': '<calculated when request is sent>',
+          Host: '<calculated when request is sent>',
+          'User-Agent': 'PostmanRuntime/7.56.0',
+          Accept: '*/*',
+          'Accept-Encoding': 'gzip, deflate, br',
+          Connection: 'keep-alive',
+          'Content-Type': 'application/json',
+          token:
+            '50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3',
+        },
+        params: {},
+        body: bh.local.requestBody,
+      };
+      bh.local.result = await this.sdService.nHttpRequest(requestOptions);
+      bh = this.sd_0PAYztpMzag6eRiT(bh);
+      //appendnew_next_sd_Wr9Ho0vseyisXZHa
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_Wr9Ho0vseyisXZHa');
+    }
+  }
+
+  sd_0PAYztpMzag6eRiT(bh) {
+    try {
+      const page = this.page;
+      console.log('result=========>', bh.local.result);
+
+      page.lossTypeRecords = bh.local.result?.records || [];
+      bh = this.sd_YdSEN5cNt9Nb4OaH(bh);
+      //appendnew_next_sd_0PAYztpMzag6eRiT
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_0PAYztpMzag6eRiT');
+    }
+  }
+
+  sd_YdSEN5cNt9Nb4OaH(bh) {
+    try {
+      const page = this.page;
+      bh.local.partGroupUrl =
+        'https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/ae5e2b99-23c4-4ef5-b953-0d63a8e220df/63a1af97-18b4-4af1-b238-b35b0baf44ce';
+      bh.local.requestBodyForPartGroup = {
+        pageNumber: 0,
+        pageSize: 100,
+        filter: {},
+      };
+      bh = this.sd_Ut2s5rmDrq4xCc39(bh);
+      //appendnew_next_sd_YdSEN5cNt9Nb4OaH
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_YdSEN5cNt9Nb4OaH');
+    }
+  }
+
+  async sd_Ut2s5rmDrq4xCc39(bh) {
+    try {
+      let requestOptions = {
+        url: bh.local.partGroupUrl,
+        method: 'post',
+        responseType: 'json',
+        headers: {
+          Cookie:
+            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
+          'Postman-Token': '<calculated when request is sent>',
+          'Content-Length': '<calculated when request is sent>',
+          Host: '<calculated when request is sent>',
+          'User-Agent': 'PostmanRuntime/7.56.0',
+          Accept: '*/*',
+          'Accept-Encoding': 'gzip, deflate, br',
+          Connection: 'keep-alive',
+          'Content-Type': 'application/json',
+          token:
+            '50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3',
+        },
+        params: {},
+        body: bh.local.requestBodyForPartGroup,
+      };
+      bh.local.resultForPartGroup = await this.sdService.nHttpRequest(
+        requestOptions
+      );
+      bh = this.sd_EMVaGfg9UubCkEXt(bh);
+      //appendnew_next_sd_Ut2s5rmDrq4xCc39
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_Ut2s5rmDrq4xCc39');
+    }
+  }
+
+  sd_EMVaGfg9UubCkEXt(bh) {
+    try {
+      const page = this.page;
+      console.log('result data PArt=========>', bh.local.resultForPartGroup);
+
+      page.partGroup = bh.local.resultForPartGroup?.records || [];
+      bh = this.sd_kXKGLk1w37hPFONv(bh);
+      //appendnew_next_sd_EMVaGfg9UubCkEXt
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_EMVaGfg9UubCkEXt');
     }
   }
 
