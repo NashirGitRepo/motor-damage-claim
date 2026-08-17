@@ -12,6 +12,25 @@
         <!-- Claim Details -->
         <div style="padding:18px;">
 
+          <!-- <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:bold;color:#555;">Claim ID</span>
+            <span>{{page.result?.data?.claimId}}</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:bold;color:#555;">Status</span>
+            <span>{{page.result?.data?.status}}</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:bold;color:#555;">Indicative Net Payable (₹)</span>
+            <span>₹ {{page.result?.data?.netPayable}}</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding:8px 0;">
+            <span style="font-weight:bold;color:#555;">SLA</span>
+            <span>{{page.result?.data?.sla}} Hours</span>
+        </div> -->
           <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
             <span style="font-weight:bold;color:#555;">Claim ID</span>
             <span>{{page.result?.data?.claimId}}</span>
@@ -19,17 +38,17 @@
 
           <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
             <span style="font-weight:bold;color:#555;">Status</span>
-            <span>{{page.result?.data?.status}}</span>
+            <span>REGISTERED</span>
           </div>
 
           <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;">
             <span style="font-weight:bold;color:#555;">Indicative Net Payable (&#x20B9;)</span>
-            <span>&#x20B9; {{page.result?.data?.netPayable}}</span>
+            <span>&#x20B9; {{page.result?.netPayable ?? 0}}</span>
           </div>
 
           <div style="display:flex;justify-content:space-between;padding:8px 0;">
             <span style="font-weight:bold;color:#555;">SLA</span>
-            <span>{{page.result?.data?.sla}} Hours</span>
+            <span>24 Hours</span>
           </div>
 
         </div>

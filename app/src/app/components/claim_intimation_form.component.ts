@@ -322,22 +322,7 @@ export class claim_intimation_formComponent {
 
   sd_0MAEKkKdzwhSv3bL(bh) {
     try {
-      const page = this.page;
-      bh.local.requestBody = {
-        policy_no: page.policyNumber,
-        'Customer Name': page.customerName,
-        'Registration Number': page.registrationNumber,
-        'Vehicle Type': page.vehicleType,
-        IDV: page.price,
-        date_of_loss: page.dateofLoss,
-        loss_code: page.lossType,
-        part_group_code: page.damageGroup,
-        estimated_parts_cost: page.estimatedPartsCost,
-        garage_type: page.garageType,
-        fir_filed: page.firFilled,
-        valid_licence: page.validDrivingLicense,
-        loss_description: page.description,
-      };
+      const page = this.page; // Validation Check
       page.dateofLossError = !page.dateofLoss
         ? 'Date of Loss is required'
         : null;
@@ -370,9 +355,45 @@ export class claim_intimation_formComponent {
       ) {
         return;
       }
-      bh.local.url =
+
+      console.log('yaha s');
+
+      // 1. Unique Claim ID Generation
+      const now = new Date();
+      const date =
+        now.getFullYear().toString() +
+        String(now.getMonth() + 1).padStart(2, '0') +
+        String(now.getDate()).padStart(2, '0');
+
+      const random = Math.floor(Math.random() * 99999)
+        .toString()
+        .padStart(5, '0');
+
+      console.log(`CLM-${date}-${random}`);
+      bh.local.claimId = `CLM-${date}-${random}`;
+      page.claimId = bh.local.claimId; // UI display
+
+      // 2. Save Claim Payload (Space typo fixed in loss_description)
+      bh.local.claimUrl =
         'https://motordamageclaimbackend.neutrinos-apps.com/api/claim';
-      console.log('api request body: ', bh.local.requestBody);
+      bh.local.claimBody = {
+        claim_id: bh.local.claimId,
+        policy_no: page.policyNumber || '',
+        'Customer Name': page.customerName || '',
+        'Registration Number': page.registrationNumber || '',
+        'Vehicle Type': page.vehicleType || '',
+        IDV: Number(page.price) || 0,
+        date_of_loss: page.dateofLoss || '',
+        loss_code: page.lossType || '',
+        part_group_code: page.damageGroup || '',
+        estimated_parts_cost: String(page.estimatedPartsCost || 0),
+        garage_type: page.garageType || '',
+        fir_filed: Boolean(page.firFilled),
+        valid_licence: Boolean(page.validDrivingLicense),
+        loss_description: page.description || '',
+      };
+
+      console.log('body---', bh.local.claimBody);
       bh = this.sd_0bqkCP4Lfzd1QZLB(bh);
       //appendnew_next_sd_0MAEKkKdzwhSv3bL
       return bh;
@@ -384,19 +405,78 @@ export class claim_intimation_formComponent {
   async sd_0bqkCP4Lfzd1QZLB(bh) {
     try {
       let requestOptions = {
-        url: bh.local.url,
+        url: bh.local.claimUrl,
         method: 'post',
         responseType: 'json',
         headers: {},
         params: {},
-        body: bh.local.requestBody,
+        body: bh.local.claimBody,
       };
       this.page.result = await this.sdService.nHttpRequest(requestOptions);
-      bh = this.sd_4Zj3HM90EmhXvpCI(bh);
+      bh = this.reelCall(bh);
       //appendnew_next_sd_0bqkCP4Lfzd1QZLB
       return bh;
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_0bqkCP4Lfzd1QZLB');
+    }
+  }
+
+  reelCall(bh) {
+    try {
+      const page = this.page;
+      console.log('Claim Saved Response:', page.result);
+
+      bh.local.reelsUrl =
+        'https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync';
+      bh.local.reelsBody = {
+        workflowId: 'ad335583-3836-4023-ba6e-e7fabe56a980',
+        version: '1.0.0',
+        inputObj: {
+          idv: Number(page.price),
+          Loss_Code: page.lossType,
+          Part_Group_Code: page.damageGroup,
+          'garage Type': page.garageType,
+          estimatedPartsCost: String(page.estimatedPartsCost),
+        },
+      };
+      console.log('reel body ', bh.local.reelsBody);
+      bh = this.sd_Z8JL80A17cHo3OFZ(bh);
+      //appendnew_next_reelCall
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_gmbjd7k6O04eokGw');
+    }
+  }
+
+  async sd_Z8JL80A17cHo3OFZ(bh) {
+    try {
+      let requestOptions = {
+        url: bh.local.reelsUrl,
+        method: 'post',
+        responseType: 'json',
+        headers: {
+          Cookie:
+            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
+          'Postman-Token': '<calculated when request is sent>',
+          'Content-Length': '<calculated when request is sent>',
+          Host: '<calculated when request is sent>',
+          'User-Agent': 'PostmanRuntime/7.56.0',
+          Accept: '*/*',
+          'Accept-Encoding': 'gzip, deflate, br',
+          Connection: 'keep-alive',
+          'Content-Type': 'application/json',
+          token:
+            'eb804c7f-993e-4387-9a4a-95b979fef9e6.2bdadd9bbdb1781eedaf6a5fee0c625533fb8029903aa0a7d27feac2551c0342',
+        },
+        params: {},
+        body: bh.local.reelsBody,
+      };
+      bh.local.reelResponse = await this.sdService.nHttpRequest(requestOptions);
+      bh = this.sd_4Zj3HM90EmhXvpCI(bh);
+      //appendnew_next_sd_Z8JL80A17cHo3OFZ
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_Z8JL80A17cHo3OFZ');
     }
   }
 
@@ -405,11 +485,92 @@ export class claim_intimation_formComponent {
       const page = this.page;
       console.log('Submit btn result---->', page.result);
 
-      bh = this.openSuccessDialog(bh);
+      console.log('reel response', bh.local.reelResponse);
+      // Response data safely extract karein
+      const resultData = bh.local.reelResponse?.result || {};
+
+      // UI Object initialize karein (agar page.result pehle se object na ho)
+      page.result = page.result || {};
+
+      // netPayable extract aur assign (with fallback to 0)
+      page.result.netPayable = resultData.netPayable ?? 0;
+
+      // Agar direct UI binding (page.netPayable) use kar rahe hain toh:
+      page.netPayable = page.result.netPayable;
+
+      console.log('Assigned Net Payable:', page.result.netPayable);
+
+      bh = this.bpmCall(bh);
       //appendnew_next_sd_4Zj3HM90EmhXvpCI
       return bh;
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_4Zj3HM90EmhXvpCI');
+    }
+  }
+
+  bpmCall(bh) {
+    try {
+      const page = this.page; // 1. Target Endpoint URL
+      bh.local.caseUrl =
+        'https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main';
+
+      // 2. Request Headers (as shown in Postman)
+      // bh.local.headers = {
+      //     "accept": "application/json",
+      //     "Content-Type": "application/json",
+      //     "Authorization": "Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
+      // };
+
+      // 3. Request Payload (Body)
+      bh.local.caseBody = {
+        caseType: 'motor-damage-claim',
+        caseData: {
+          claim_id: bh.local.claimId,
+        },
+        wfData: {
+          claim_id: bh.local.claimId,
+          netPayable: Number(page.netPayable),
+        },
+      };
+
+      // Debug Log
+      console.log('Case Service Payload:', bh.local.caseBody);
+      bh = this.sd_eYDssfNFPohmMifq(bh);
+      //appendnew_next_bpmCall
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_0f7uORy7tzBonnkv');
+    }
+  }
+
+  async sd_eYDssfNFPohmMifq(bh) {
+    try {
+      let requestOptions = {
+        url: bh.local.caseUrl,
+        method: 'post',
+        responseType: 'json',
+        headers: {
+          Cookie:
+            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
+          'Postman-Token': '<calculated when request is sent>',
+          'Content-Length': '<calculated when request is sent>',
+          Host: '<calculated when request is sent>',
+          'User-Agent': 'PostmanRuntime/7.56.0',
+          Accept: 'application/json',
+          'Accept-Encoding': 'gzip, deflate, br',
+          Connection: 'keep-alive',
+          'Content-Type': 'application/json',
+          Authorization: ' Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN',
+        },
+        params: {},
+        body: bh.local.caseBody,
+      };
+      bh.local.caseResponse = await this.sdService.nHttpRequest(requestOptions);
+      bh = this.openSuccessDialog(bh);
+      //appendnew_next_sd_eYDssfNFPohmMifq
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_eYDssfNFPohmMifq');
     }
   }
 

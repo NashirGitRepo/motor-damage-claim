@@ -205,7 +205,7 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "\nbh.local.requestBody ={\n    \"policy_no\": page.policyNumber,\n    \"Customer Name\" : page.customerName,\n    \"Registration Number\" : page.registrationNumber,\n    \"Vehicle Type\" : page.vehicleType,\n    \"IDV\" : page.price,\n    \"date_of_loss\" : page.dateofLoss,\n    \"loss_code\" : page.lossType,\n    \"part_group_code\" : page.damageGroup,\n    \"estimated_parts_cost\" : page.estimatedPartsCost,\n    \"garage_type\" : page.garageType,\n    \"fir_filed\" : page.firFilled,\n    \"valid_licence\" : page.validDrivingLicense,\n    \"loss_description\" : page.description\n}\npage.dateofLossError = !page.dateofLoss ? \"Date of Loss is required\" : null;\npage.lossTypeError = !page.lossType ? \"Loss Type is required\" : null;\npage.damageGroupError = !page.damageGroup ? \"Damage Group is required\" : null;\npage.estimatedPartsCostError = !page.estimatedPartsCost ? \"Estimated Parts Cost is required\" : null;\npage.garageTypeError = !page.garageType ? \"Garage Type is required\" : null;\npage.descriptionError = !page.description ? \"Description is required\" : null;\n\nif (\n    page.policyNumberError ||\n    page.customerNameError ||\n    page.registrationNumberError ||\n    page.vehicleTypeError ||\n    page.priceError ||\n    page.dateofLossError ||\n    page.lossTypeError ||\n    page.damageGroupError ||\n    page.estimatedPartsCostError ||\n    page.garageTypeError ||\n    page.descriptionError\n) {\n    return;\n}\nbh.local.url=\"https://motordamageclaimbackend.neutrinos-apps.com/api/claim\";\nconsole.log(\"api request body: \",bh.local.requestBody);",
+        "script": "// Validation Check\npage.dateofLossError = !page.dateofLoss ? \"Date of Loss is required\" : null;\npage.lossTypeError = !page.lossType ? \"Loss Type is required\" : null;\npage.damageGroupError = !page.damageGroup ? \"Damage Group is required\" : null;\npage.estimatedPartsCostError = !page.estimatedPartsCost ? \"Estimated Parts Cost is required\" : null;\npage.garageTypeError = !page.garageType ? \"Garage Type is required\" : null;\npage.descriptionError = !page.description ? \"Description is required\" : null;\n\nif (\n    page.policyNumberError || page.customerNameError || page.registrationNumberError ||\n    page.vehicleTypeError || page.priceError || page.dateofLossError ||\n    page.lossTypeError || page.damageGroupError || page.estimatedPartsCostError ||\n    page.garageTypeError || page.descriptionError\n) {\n    return;\n}\n\nconsole.log(\"yaha s\")\n\n// 1. Unique Claim ID Generation\nconst now = new Date();\nconst date =\n    now.getFullYear().toString() +\n    String(now.getMonth() + 1).padStart(2, '0') +\n    String(now.getDate()).padStart(2, '0');\n\nconst random = Math.floor(Math.random() * 99999)\n    .toString()\n    .padStart(5, '0');\n\nconsole.log(`CLM-${date}-${random}`)\nbh.local.claimId = `CLM-${date}-${random}`;\npage.claimId = bh.local.claimId; // UI display\n\n// 2. Save Claim Payload (Space typo fixed in loss_description)\nbh.local.claimUrl = \"https://motordamageclaimbackend.neutrinos-apps.com/api/claim\";\nbh.local.claimBody = {\n    \"claim_id\": bh.local.claimId,\n    \"policy_no\": page.policyNumber || \"\",\n    \"Customer Name\": page.customerName || \"\",\n    \"Registration Number\": page.registrationNumber || \"\",\n    \"Vehicle Type\": page.vehicleType || \"\",\n    \"IDV\": Number(page.price) || 0,\n    \"date_of_loss\": page.dateofLoss || \"\",\n    \"loss_code\": page.lossType || \"\",\n    \"part_group_code\": page.damageGroup || \"\",\n    \"estimated_parts_cost\": String(page.estimatedPartsCost || 0),\n    \"garage_type\": page.garageType || \"\",\n    \"fir_filed\": Boolean(page.firFilled),\n    \"valid_licence\": Boolean(page.validDrivingLicense),\n    \"loss_description\": page.description || \"\"\n};\n\nconsole.log(\"body---\",bh.local.claimBody)",
         "functionName": "sd_0MAEKkKdzwhSv3bL",
         "category": "Function",
         "x": 305,
@@ -230,10 +230,10 @@
         "method": "post",
         "methodMapping": "",
         "methodMappingObj": {},
-        "urlMapping": "bh.local.url",
+        "urlMapping": "bh.local.claimUrl",
         "urlMappingObj": {
             "mapVarType": "bh.local",
-            "mapVarValue": "url"
+            "mapVarValue": "claimUrl"
         },
         "ret": "json",
         "retMapping": "",
@@ -243,10 +243,10 @@
         "observeMappingObj": {},
         "reportProgress": false,
         "withCreds": false,
-        "reqBody": "bh.local.requestBody",
+        "reqBody": "bh.local.claimBody",
         "reqBodyObj": {
             "mapVarType": "bh.local",
-            "mapVarValue": "requestBody"
+            "mapVarValue": "claimBody"
         },
         "resultMapping": "this.page.result",
         "resultMappingObj": {
@@ -263,11 +263,11 @@
         "paramMappingObj": {},
         "functionName": "sd_0bqkCP4Lfzd1QZLB",
         "category": "HTTP",
-        "x": 440,
+        "x": 405,
         "y": 360,
         "wires": [
             [
-                "sd_4Zj3HM90EmhXvpCI"
+                "sd_gmbjd7k6O04eokGw"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -282,14 +282,14 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "console.log(\"Submit btn result---->\", page.result);\n",
+        "script": "console.log(\"Submit btn result---->\", page.result);\n\nconsole.log(\"reel response\",bh.local.reelResponse);\n// Response data safely extract karein\nconst resultData = bh.local.reelResponse?.result || {};\n\n// UI Object initialize karein (agar page.result pehle se object na ho)\npage.result = page.result || {};\n\n// netPayable extract aur assign (with fallback to 0)\npage.result.netPayable = resultData.netPayable ?? 0;\n\n// Agar direct UI binding (page.netPayable) use kar rahe hain toh:\npage.netPayable = page.result.netPayable;\n\nconsole.log(\"Assigned Net Payable:\", page.result.netPayable);\n",
         "functionName": "sd_4Zj3HM90EmhXvpCI",
         "category": "Function",
-        "x": 605,
+        "x": 745,
         "y": 360,
         "wires": [
             [
-                "sd_EU76cENGxsPkR5Be"
+                "sd_0f7uORy7tzBonnkv"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -333,8 +333,8 @@
         "resultMapping": "this.page",
         "functionName": "openSuccessDialog",
         "category": "Dialog",
-        "x": 720,
-        "y": 380,
+        "x": 1105,
+        "y": 360,
         "wires": [
             [],
             [],
@@ -505,6 +505,7 @@
         "nodeType": "flow",
         "name": "",
         "method": "post",
+        "methodMapping": "",
         "methodMappingObj": {},
         "urlMapping": "bh.local.lossCodeUrl",
         "urlMappingObj": {
@@ -512,8 +513,10 @@
             "mapVarValue": "lossCodeUrl"
         },
         "ret": "json",
+        "retMapping": "",
         "retMappingObj": {},
         "observe": "",
+        "observeMapping": "",
         "observeMappingObj": {},
         "reportProgress": false,
         "withCreds": false,
@@ -581,9 +584,11 @@
                 "defaultValue": "50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3"
             }
         ],
+        "headerMapping": "",
         "headerMappingObj": {},
         "params": {},
         "paramsObj": [],
+        "paramMapping": "",
         "paramMappingObj": {},
         "functionName": "sd_Wr9Ho0vseyisXZHa",
         "category": "HTTP",
@@ -651,6 +656,7 @@
         "nodeType": "flow",
         "name": "",
         "method": "post",
+        "methodMapping": "",
         "methodMappingObj": {},
         "urlMapping": "bh.local.partGroupUrl",
         "urlMappingObj": {
@@ -658,8 +664,10 @@
             "mapVarValue": "partGroupUrl"
         },
         "ret": "json",
+        "retMapping": "",
         "retMappingObj": {},
         "observe": "",
+        "observeMapping": "",
         "observeMappingObj": {},
         "reportProgress": false,
         "withCreds": false,
@@ -727,9 +735,11 @@
                 "defaultValue": "50654d3e-2224-4755-95ad-996052c1c67a.8f42fcfb3b070b965115764405991ab0b458314338b79ba102b436e78fc92bc3"
             }
         ],
+        "headerMapping": "",
         "headerMappingObj": {},
         "params": {},
         "paramsObj": [],
+        "paramMapping": "",
         "paramMappingObj": {},
         "functionName": "sd_Ut2s5rmDrq4xCc39",
         "category": "HTTP",
@@ -760,6 +770,259 @@
         "wires": [
             [
                 "sd_kXKGLk1w37hPFONv"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_gmbjd7k6O04eokGw",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "reel call",
+        "script": "console.log(\"Claim Saved Response:\", page.result);\n\nbh.local.reelsUrl = \"https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync\";\nbh.local.reelsBody = {\n    \"workflowId\": \"ad335583-3836-4023-ba6e-e7fabe56a980\",\n    \"version\": \"1.0.0\",\n    \"inputObj\": {\n        \"idv\": Number(page.price),\n        \"Loss_Code\": page.lossType,\n        \"Part_Group_Code\": page.damageGroup,\n        \"garage Type\": page.garageType,\n        \"estimatedPartsCost\": String(page.estimatedPartsCost)\n    }\n};\nconsole.log(\"reel body \",bh.local.reelsBody);",
+        "functionName": "reelCall",
+        "category": "Function",
+        "x": 505,
+        "y": 360,
+        "wires": [
+            [
+                "sd_Z8JL80A17cHo3OFZ"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_Z8JL80A17cHo3OFZ",
+        "type": "HttpRequest",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "client-pages",
+        "nodeType": "flow",
+        "name": "",
+        "method": "post",
+        "methodMapping": "",
+        "methodMappingObj": {},
+        "urlMapping": "bh.local.reelsUrl",
+        "urlMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "reelsUrl"
+        },
+        "ret": "json",
+        "retMapping": "",
+        "retMappingObj": {},
+        "observe": "",
+        "observeMapping": "",
+        "observeMappingObj": {},
+        "reportProgress": false,
+        "withCreds": false,
+        "reqBody": "bh.local.reelsBody",
+        "reqBodyObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "reelsBody"
+        },
+        "resultMapping": "bh.local.reelResponse",
+        "resultMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "reelResponse"
+        },
+        "headers": {
+            "Cookie": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE",
+            "Postman-Token": "<calculated when request is sent>",
+            "Content-Length": "<calculated when request is sent>",
+            "Host": "<calculated when request is sent>",
+            "User-Agent": "PostmanRuntime/7.56.0",
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Content-Type": "application/json",
+            "token": "eb804c7f-993e-4387-9a4a-95b979fef9e6.2bdadd9bbdb1781eedaf6a5fee0c625533fb8029903aa0a7d27feac2551c0342"
+        },
+        "headersObj": [
+            {
+                "key": "Cookie",
+                "defaultValue": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE"
+            },
+            {
+                "key": "Postman-Token",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Content-Length",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Host",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "User-Agent",
+                "defaultValue": "PostmanRuntime/7.56.0"
+            },
+            {
+                "key": "Accept",
+                "defaultValue": "*/*"
+            },
+            {
+                "key": "Accept-Encoding",
+                "defaultValue": "gzip, deflate, br"
+            },
+            {
+                "key": "Connection",
+                "defaultValue": "keep-alive"
+            },
+            {
+                "key": "Content-Type",
+                "defaultValue": "application/json"
+            },
+            {
+                "key": "token",
+                "defaultValue": "eb804c7f-993e-4387-9a4a-95b979fef9e6.2bdadd9bbdb1781eedaf6a5fee0c625533fb8029903aa0a7d27feac2551c0342"
+            }
+        ],
+        "headerMapping": "",
+        "headerMappingObj": {},
+        "params": {},
+        "paramsObj": [],
+        "paramMapping": "",
+        "paramMappingObj": {},
+        "functionName": "sd_Z8JL80A17cHo3OFZ",
+        "category": "HTTP",
+        "x": 625,
+        "y": 360,
+        "wires": [
+            [
+                "sd_4Zj3HM90EmhXvpCI"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_0f7uORy7tzBonnkv",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "bpm call",
+        "script": "// 1. Target Endpoint URL\nbh.local.caseUrl = \"https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main\";\n\n// 2. Request Headers (as shown in Postman)\n// bh.local.headers = {\n//     \"accept\": \"application/json\",\n//     \"Content-Type\": \"application/json\",\n//     \"Authorization\": \"Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN\"\n// };\n\n// 3. Request Payload (Body)\nbh.local.caseBody = {\n    \"caseType\": \"motor-damage-claim\",\n    \"caseData\": {\n        \"claim_id\": bh.local.claimId\n    },\n    \"wfData\": {\n        \"claim_id\": bh.local.claimId,\n        \"netPayable\": Number(page.netPayable)\n    }\n};\n\n// Debug Log\nconsole.log(\"Case Service Payload:\", bh.local.caseBody);",
+        "functionName": "bpmCall",
+        "category": "Function",
+        "x": 840,
+        "y": 360,
+        "wires": [
+            [
+                "sd_eYDssfNFPohmMifq"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_eYDssfNFPohmMifq",
+        "type": "HttpRequest",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "client-pages",
+        "nodeType": "flow",
+        "name": "",
+        "method": "post",
+        "methodMappingObj": {},
+        "urlMapping": "bh.local.caseUrl",
+        "urlMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "caseUrl"
+        },
+        "ret": "json",
+        "retMappingObj": {},
+        "observe": "",
+        "observeMappingObj": {},
+        "reportProgress": false,
+        "withCreds": false,
+        "reqBody": "bh.local.caseBody",
+        "reqBodyObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "caseBody"
+        },
+        "resultMapping": "bh.local.caseResponse",
+        "resultMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "caseResponse"
+        },
+        "headers": {
+            "Cookie": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE",
+            "Postman-Token": "<calculated when request is sent>",
+            "Content-Length": "<calculated when request is sent>",
+            "Host": "<calculated when request is sent>",
+            "User-Agent": "PostmanRuntime/7.56.0",
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Content-Type": "application/json",
+            "Authorization": " Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
+        },
+        "headersObj": [
+            {
+                "key": "Cookie",
+                "defaultValue": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE"
+            },
+            {
+                "key": "Postman-Token",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Content-Length",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "Host",
+                "defaultValue": "<calculated when request is sent>"
+            },
+            {
+                "key": "User-Agent",
+                "defaultValue": "PostmanRuntime/7.56.0"
+            },
+            {
+                "key": "Accept",
+                "defaultValue": "application/json"
+            },
+            {
+                "key": "Accept-Encoding",
+                "defaultValue": "gzip, deflate, br"
+            },
+            {
+                "key": "Connection",
+                "defaultValue": "keep-alive"
+            },
+            {
+                "key": "Content-Type",
+                "defaultValue": "application/json"
+            },
+            {
+                "key": "Authorization",
+                "defaultValue": " Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
+            }
+        ],
+        "headerMappingObj": {},
+        "params": {},
+        "paramsObj": [],
+        "paramMappingObj": {},
+        "functionName": "sd_eYDssfNFPohmMifq",
+        "category": "HTTP",
+        "x": 965,
+        "y": 360,
+        "wires": [
+            [
+                "sd_EU76cENGxsPkR5Be"
             ]
         ],
         "__n_excludedFromValidation__": {},
