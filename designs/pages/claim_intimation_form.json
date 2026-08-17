@@ -282,14 +282,14 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "console.log(\"Submit btn result---->\", page.result);\n\nconsole.log(\"reel response\",bh.local.reelResponse);\n// Response data safely extract karein\nconst resultData = bh.local.reelResponse?.result || {};\n\n// UI Object initialize karein (agar page.result pehle se object na ho)\npage.result = page.result || {};\n\n// netPayable extract aur assign (with fallback to 0)\npage.result.netPayable = resultData.netPayable ?? 0;\n\n// Agar direct UI binding (page.netPayable) use kar rahe hain toh:\npage.netPayable = page.result.netPayable;\n\nconsole.log(\"Assigned Net Payable:\", page.result.netPayable);\n",
+        "script": "console.log(\"Submit btn result---->\", page.result);\n\nconsole.log(\"reel response\",bh.local.reelResponse);\n// Response data safely extract karein\nconst resultData = bh.local.reelResponse?.result || {};\n\n// UI Object initialize karein (agar page.result pehle se object na ho)\npage.result = page.result || {};\n\n// netPayable extract aur assign (with fallback to 0)\npage.result.netPayable = resultData.netPayable ?? 0;\n\n// Agar direct UI binding (page.netPayable) use kar rahe hain toh:\npage.netPayable = page.result.netPayable;\n\nconsole.log(\"Assigned Net Payable:\", page.result.netPayable);\n// 1. Token Endpoint URL\nbh.local.tokenUrl = \"https://ids-ctr-pt.neutrinos-apps.com/token\";\n\n// 2. Headers\nbh.local.headers = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\",\n    \"Content-Length\": \"<calculated when request is sent>\",\n    \"Host\": \"<calculated when request is sent>\",\n    \"User-Agent\": \"PostmanRuntime/7.56.1\",\n    \"Accept\": \"*/*\",\n    \"Accept-Encoding\": \"gzip, deflate, br\",\n    \"Connection\": \"keep-alive\"\n};\n\n// 3. Body (x-www-form-urlencoded format)\nconst params = new URLSearchParams();\nparams.append(\"client_id\", \"0ddh_euTKkSA682Yy5HuC\");\nparams.append(\"client_secret\", \"e28WZR6ZKyrYILTSKKClFEwNlYoGR2cvISwFCoIXP4S7DJgsaqhHRSNqpoWgYbcx_DUlrSkoA1zS5uFOzP-J9C\"); // Replace with complete secret\nparams.append(\"grant_type\", \"client_credentials\");\n\nbh.local.tokenBody = params.toString();\n\n// Debug Log\nconsole.log(\"Token Request Body:\", bh.local.tokenBody);\n",
         "functionName": "sd_4Zj3HM90EmhXvpCI",
         "category": "Function",
-        "x": 745,
+        "x": 725,
         "y": 360,
         "wires": [
             [
-                "sd_0f7uORy7tzBonnkv"
+                "sd_FozxYfWm9kGr5mem"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -333,7 +333,7 @@
         "resultMapping": "this.page",
         "functionName": "openSuccessDialog",
         "category": "Dialog",
-        "x": 1105,
+        "x": 1205,
         "y": 360,
         "wires": [
             [],
@@ -913,10 +913,10 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "bpm call",
-        "script": "// 1. Target Endpoint URL\nbh.local.caseUrl = \"https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main\";\n\n// 2. Request Headers (as shown in Postman)\n// bh.local.headers = {\n//     \"accept\": \"application/json\",\n//     \"Content-Type\": \"application/json\",\n//     \"Authorization\": \"Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN\"\n// };\n\n// 3. Request Payload (Body)\nbh.local.caseBody = {\n    \"caseType\": \"motor-damage-claim\",\n    \"caseData\": {\n        \"claim_id\": bh.local.claimId\n    },\n    \"wfData\": {\n        \"claim_id\": bh.local.claimId,\n        \"netPayable\": Number(page.netPayable)\n    }\n};\n\n// Debug Log\nconsole.log(\"Case Service Payload:\", bh.local.caseBody);",
+        "script": "// 1. Target Endpoint URL\nbh.local.token=bh.local.tokenResponse.access_token;\nbh.local.caseUrl = \"https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main\";\n\n// 2. Request Headers (as shown in Postman)\n// bh.local.headers = {\n//     \"accept\": \"application/json\",\n//     \"Content-Type\": \"application/json\",\n//     \"Authorization\": \"Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN\"\n// };\n\n// 3. Request Payload (Body)\n// Dynamic mapping from page and bh.local\nconst claimData = {\n    \"claim_id\": bh.local.claimId || page.claimId,\n    \"policy_number\": page.policyNumber || \"\",\n    \"customerName\": page.customerName || \"\",\n    \"vehicleRegistration\": page.registrationNumber || page.vehicleRegistration || \"\",\n    \"vehicleType\": page.vehicleType || \"\",\n    \"idv\": Number(page.price || page.idv || 0),\n    \"date_of_loss\": page.dateofLoss || \"\",\n    \"intimationDate\": page.intimationDate || new Date().toISOString().split('T')[0],\n    \"lossType\": page.lossType || \"\",\n    \"part_group_code\": page.damageGroup || page.part_group_code || \"\",\n    \"estimatedPartsCost\": Number(page.estimatedPartsCost || 0),\n    \"garageType\": page.garageType || \"\",\n    \"netPayable\": Number(page.netPayable || 0),\n    \"fire_file\": String(Boolean(page.firFilled))\n};\n\nconsole.log(\"api body------->\", claimData);\n\n// Final Payload Construction\nbh.local.caseBody = {\n    \"caseType\": \"motor-damage-claim\",\n    \"caseData\": claimData,\n    \"wfData\": claimData\n};\n\nconsole.log(\"Dynamic Payload:\", bh.local.caseBody);\n// Debug Log\nconsole.log(\"Case Service Payload:\", bh.local.caseBody);\n\nconsole.log(\"token----------->\", bh.local.token)\nbh.local.bpmHeader = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\",\n    \"Content-Length\": \"<calculated when request is sent>\",\n    \"Host\": \"<calculated when request is sent>\",\n    \"User-Agent\": \"PostmanRuntime/7.56.1\",\n    \"Accept\": \"*/*\",\n    \"Accept-Encoding\": \"gzip, deflate, br\",\n    \"Connection\": \"keep-alive\",\n    \"Authorization\": \"Bearer \" + bh.local.token\n};",
         "functionName": "bpmCall",
         "category": "Function",
-        "x": 840,
+        "x": 965,
         "y": 360,
         "wires": [
             [
@@ -958,71 +958,73 @@
             "mapVarType": "bh.local",
             "mapVarValue": "caseResponse"
         },
-        "headers": {
-            "Cookie": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE",
-            "Postman-Token": "<calculated when request is sent>",
-            "Content-Length": "<calculated when request is sent>",
-            "Host": "<calculated when request is sent>",
-            "User-Agent": "PostmanRuntime/7.56.0",
-            "Accept": "application/json",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive",
-            "Content-Type": "application/json",
-            "Authorization": " Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
+        "headerMapping": "bh.local.bpmHeader",
+        "headerMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "bpmHeader"
         },
-        "headersObj": [
-            {
-                "key": "Cookie",
-                "defaultValue": "asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE"
-            },
-            {
-                "key": "Postman-Token",
-                "defaultValue": "<calculated when request is sent>"
-            },
-            {
-                "key": "Content-Length",
-                "defaultValue": "<calculated when request is sent>"
-            },
-            {
-                "key": "Host",
-                "defaultValue": "<calculated when request is sent>"
-            },
-            {
-                "key": "User-Agent",
-                "defaultValue": "PostmanRuntime/7.56.0"
-            },
-            {
-                "key": "Accept",
-                "defaultValue": "application/json"
-            },
-            {
-                "key": "Accept-Encoding",
-                "defaultValue": "gzip, deflate, br"
-            },
-            {
-                "key": "Connection",
-                "defaultValue": "keep-alive"
-            },
-            {
-                "key": "Content-Type",
-                "defaultValue": "application/json"
-            },
-            {
-                "key": "Authorization",
-                "defaultValue": " Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
-            }
-        ],
-        "headerMappingObj": {},
         "params": {},
         "paramsObj": [],
         "paramMappingObj": {},
         "functionName": "sd_eYDssfNFPohmMifq",
         "category": "HTTP",
-        "x": 965,
+        "x": 1085,
         "y": 360,
         "wires": [
             [
                 "sd_EU76cENGxsPkR5Be"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_FozxYfWm9kGr5mem",
+        "type": "HttpRequest",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "client-pages",
+        "nodeType": "flow",
+        "name": "token request",
+        "method": "post",
+        "methodMappingObj": {},
+        "urlMapping": "bh.local.tokenUrl",
+        "urlMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "tokenUrl"
+        },
+        "ret": "json",
+        "retMappingObj": {},
+        "observe": "",
+        "observeMappingObj": {},
+        "reportProgress": false,
+        "withCreds": false,
+        "reqBody": "bh.local.tokenBody",
+        "reqBodyObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "tokenBody"
+        },
+        "resultMapping": "bh.local.tokenResponse",
+        "resultMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "tokenResponse"
+        },
+        "headerMapping": "bh.local.headers",
+        "headerMappingObj": {
+            "mapVarType": "bh.local",
+            "mapVarValue": "headers"
+        },
+        "params": {},
+        "paramsObj": [],
+        "paramMappingObj": {},
+        "functionName": "tokenRequest",
+        "category": "HTTP",
+        "x": 845,
+        "y": 360,
+        "wires": [
+            [
+                "sd_0f7uORy7tzBonnkv"
             ]
         ],
         "__n_excludedFromValidation__": {},
