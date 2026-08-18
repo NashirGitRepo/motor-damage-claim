@@ -191,111 +191,12 @@
         "y": 360,
         "wires": [
             [
-                "sd_0MAEKkKdzwhSv3bL"
+                "sd_gmbjd7k6O04eokGw"
             ]
         ],
         "__n_excludedFromValidation__": {},
         "generateNext": true,
         "serviceName": "claim_intimation_formComponent"
-    },
-    {
-        "id": "sd_0MAEKkKdzwhSv3bL",
-        "type": "Script",
-        "z": "sd_9WnerbnCPfrUZ6Rb",
-        "viewType": "common",
-        "nodeType": "flow",
-        "name": "",
-        "script": "// Validation Check\npage.dateofLossError = !page.dateofLoss ? \"Date of Loss is required\" : null;\npage.lossTypeError = !page.lossType ? \"Loss Type is required\" : null;\npage.damageGroupError = !page.damageGroup ? \"Damage Group is required\" : null;\npage.estimatedPartsCostError = !page.estimatedPartsCost ? \"Estimated Parts Cost is required\" : null;\npage.garageTypeError = !page.garageType ? \"Garage Type is required\" : null;\npage.descriptionError = !page.description ? \"Description is required\" : null;\n\nif (\n    page.policyNumberError || page.customerNameError || page.registrationNumberError ||\n    page.vehicleTypeError || page.priceError || page.dateofLossError ||\n    page.lossTypeError || page.damageGroupError || page.estimatedPartsCostError ||\n    page.garageTypeError || page.descriptionError\n) {\n    return;\n}\n\nconsole.log(\"yaha s\")\n\n// 1. Unique Claim ID Generation\nconst now = new Date();\nconst date =\n    now.getFullYear().toString() +\n    String(now.getMonth() + 1).padStart(2, '0') +\n    String(now.getDate()).padStart(2, '0');\n\nconst random = Math.floor(Math.random() * 99999)\n    .toString()\n    .padStart(5, '0');\n\nconsole.log(`CLM-${date}-${random}`)\nbh.local.claimId = `CLM-${date}-${random}`;\npage.claimId = bh.local.claimId; // UI display\n\n// 2. Save Claim Payload (Space typo fixed in loss_description)\nbh.local.claimUrl = \"https://motordamageclaimbackend.neutrinos-apps.com/api/claim\";\nbh.local.claimBody = {\n    \"claim_id\": bh.local.claimId,\n    \"policy_no\": page.policyNumber || \"\",\n    \"Customer Name\": page.customerName || \"\",\n    \"Registration Number\": page.registrationNumber || \"\",\n    \"Vehicle Type\": page.vehicleType || \"\",\n    \"IDV\": Number(page.price) || 0,\n    \"date_of_loss\": page.dateofLoss || \"\",\n    \"loss_code\": page.lossType || \"\",\n    \"part_group_code\": page.damageGroup || \"\",\n    \"estimated_parts_cost\": String(page.estimatedPartsCost || 0),\n    \"garage_type\": page.garageType || \"\",\n    \"fir_filed\": Boolean(page.firFilled),\n    \"valid_licence\": Boolean(page.validDrivingLicense),\n    \"loss_description\": page.description || \"\"\n};\n\nconsole.log(\"body---\",bh.local.claimBody)",
-        "functionName": "sd_0MAEKkKdzwhSv3bL",
-        "category": "Function",
-        "x": 305,
-        "y": 360,
-        "wires": [
-            [
-                "sd_0bqkCP4Lfzd1QZLB"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "claim_intimation_formComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_0bqkCP4Lfzd1QZLB",
-        "type": "HttpRequest",
-        "z": "sd_9WnerbnCPfrUZ6Rb",
-        "viewType": "client-pages",
-        "nodeType": "flow",
-        "name": "",
-        "method": "post",
-        "methodMapping": "",
-        "methodMappingObj": {},
-        "urlMapping": "bh.local.claimUrl",
-        "urlMappingObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "claimUrl"
-        },
-        "ret": "json",
-        "retMapping": "",
-        "retMappingObj": {},
-        "observe": "",
-        "observeMapping": "",
-        "observeMappingObj": {},
-        "reportProgress": false,
-        "withCreds": false,
-        "reqBody": "bh.local.claimBody",
-        "reqBodyObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "claimBody"
-        },
-        "resultMapping": "this.page.result",
-        "resultMappingObj": {
-            "mapVarType": "this.page",
-            "mapVarValue": "result"
-        },
-        "headers": {},
-        "headersObj": [],
-        "headerMapping": "",
-        "headerMappingObj": {},
-        "params": {},
-        "paramsObj": [],
-        "paramMapping": "",
-        "paramMappingObj": {},
-        "functionName": "sd_0bqkCP4Lfzd1QZLB",
-        "category": "HTTP",
-        "x": 405,
-        "y": 360,
-        "wires": [
-            [
-                "sd_gmbjd7k6O04eokGw"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "claim_intimation_formComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_4Zj3HM90EmhXvpCI",
-        "type": "Script",
-        "z": "sd_9WnerbnCPfrUZ6Rb",
-        "viewType": "common",
-        "nodeType": "flow",
-        "name": "",
-        "script": "console.log(\"Submit btn result---->\", page.result);\n\nconsole.log(\"reel response\",bh.local.reelResponse);\n// Response data safely extract karein\nconst resultData = bh.local.reelResponse?.result || {};\n\n// UI Object initialize karein (agar page.result pehle se object na ho)\npage.result = page.result || {};\n\n// netPayable extract aur assign (with fallback to 0)\npage.result.netPayable = resultData.netPayable ?? 0;\n\n// Agar direct UI binding (page.netPayable) use kar rahe hain toh:\npage.netPayable = page.result.netPayable;\n\nconsole.log(\"Assigned Net Payable:\", page.result.netPayable);\n// 1. Token Endpoint URL\nbh.local.tokenUrl = \"https://ids-ctr-pt.neutrinos-apps.com/token\";\n\n// 2. Headers\nbh.local.headers = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\",\n    \"Content-Length\": \"<calculated when request is sent>\",\n    \"Host\": \"<calculated when request is sent>\",\n    \"User-Agent\": \"PostmanRuntime/7.56.1\",\n    \"Accept\": \"*/*\",\n    \"Accept-Encoding\": \"gzip, deflate, br\",\n    \"Connection\": \"keep-alive\"\n};\n\n// 3. Body (x-www-form-urlencoded format)\nconst params = new URLSearchParams();\nparams.append(\"client_id\", \"0ddh_euTKkSA682Yy5HuC\");\nparams.append(\"client_secret\", \"e28WZR6ZKyrYILTSKKClFEwNlYoGR2cvISwFCoIXP4S7DJgsaqhHRSNqpoWgYbcx_DUlrSkoA1zS5uFOzP-J9C\"); // Replace with complete secret\nparams.append(\"grant_type\", \"client_credentials\");\n\nbh.local.tokenBody = params.toString();\n\n// Debug Log\nconsole.log(\"Token Request Body:\", bh.local.tokenBody);\n",
-        "functionName": "sd_4Zj3HM90EmhXvpCI",
-        "category": "Function",
-        "x": 725,
-        "y": 360,
-        "wires": [
-            [
-                "sd_FozxYfWm9kGr5mem"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "claim_intimation_formComponent",
-        "generated": true
     },
     {
         "id": "sd_EU76cENGxsPkR5Be",
@@ -787,7 +688,7 @@
         "script": "console.log(\"Claim Saved Response:\", page.result);\n\nbh.local.reelsUrl = \"https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync\";\nbh.local.reelsBody = {\n    \"workflowId\": \"ad335583-3836-4023-ba6e-e7fabe56a980\",\n    \"version\": \"1.0.0\",\n    \"inputObj\": {\n        \"idv\": Number(page.price),\n        \"Loss_Code\": page.lossType,\n        \"Part_Group_Code\": page.damageGroup,\n        \"garage Type\": page.garageType,\n        \"estimatedPartsCost\": String(page.estimatedPartsCost)\n    }\n};\nconsole.log(\"reel body \",bh.local.reelsBody);",
         "functionName": "reelCall",
         "category": "Function",
-        "x": 505,
+        "x": 445,
         "y": 360,
         "wires": [
             [
@@ -898,7 +799,29 @@
         "y": 360,
         "wires": [
             [
-                "sd_4Zj3HM90EmhXvpCI"
+                "sd_zFak7feHHmQvqCbl"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_4Zj3HM90EmhXvpCI",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(\"Submit btn result---->\", page.result);\n\n// console.log(\"reel response\",bh.local.reelResponse);\n// // Response data safely extract karein\n// const resultData = bh.local.reelResponse?.result || {};\n\n// // UI Object initialize karein (agar page.result pehle se object na ho)\n// page.result = page.result || {};\n\n// // netPayable extract aur assign (with fallback to 0)\n// page.result.netPayable = resultData.netPayable ?? 0;\n\n// // Agar direct UI binding (page.netPayable) use kar rahe hain toh:\n// page.netPayable = page.result.netPayable;\n\n// console.log(\"Assigned Net Payable:\", page.result.netPayable);\n// // 1. Token Endpoint URL\n// bh.local.tokenUrl = \"https://ids-ctr-pt.neutrinos-apps.com/token\";\n\n// // 2. Headers\n// bh.local.headers = {\n//     \"Content-Type\": \"application/x-www-form-urlencoded\",\n//     \"Content-Length\": \"<calculated when request is sent>\",\n//     \"Host\": \"<calculated when request is sent>\",\n//     \"User-Agent\": \"PostmanRuntime/7.56.1\",\n//     \"Accept\": \"*/*\",\n//     \"Accept-Encoding\": \"gzip, deflate, br\",\n//     \"Connection\": \"keep-alive\"\n// };\n\n// // 3. Body (x-www-form-urlencoded format)\n// const params = new URLSearchParams();\n// params.append(\"client_id\", \"0ddh_euTKkSA682Yy5HuC\");\n// params.append(\"client_secret\", \"e28WZR6ZKyrYILTSKKClFEwNlYoGR2cvISwFCoIXP4S7DJgsaqhHRSNqpoWgYbcx_DUlrSkoA1zS5uFOzP-J9C\"); // Replace with complete secret\n// params.append(\"grant_type\", \"client_credentials\");\n\n// bh.local.tokenBody = params.toString();\n\n// // Debug Log\n// console.log(\"Token Request Body:\", bh.local.tokenBody);\n",
+        "functionName": "sd_4Zj3HM90EmhXvpCI",
+        "category": "Function",
+        "x": 925,
+        "y": 360,
+        "wires": [
+            [
+                "sd_0f7uORy7tzBonnkv"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -913,62 +836,10 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "bpm call",
-        "script": "// 1. Target Endpoint URL\nbh.local.token=bh.local.tokenResponse.access_token;\nbh.local.caseUrl = \"https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main\";\n\n// 2. Request Headers (as shown in Postman)\n// bh.local.headers = {\n//     \"accept\": \"application/json\",\n//     \"Content-Type\": \"application/json\",\n//     \"Authorization\": \"Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN\"\n// };\n\n// 3. Request Payload (Body)\n// Dynamic mapping from page and bh.local\nconst claimData = {\n    \"claim_id\": bh.local.claimId || page.claimId,\n    \"policy_number\": page.policyNumber || \"\",\n    \"customerName\": page.customerName || \"\",\n    \"vehicleRegistration\": page.registrationNumber || page.vehicleRegistration || \"\",\n    \"vehicleType\": page.vehicleType || \"\",\n    \"idv\": Number(page.price || page.idv || 0),\n    \"date_of_loss\": page.dateofLoss || \"\",\n    \"intimationDate\": page.intimationDate || new Date().toISOString().split('T')[0],\n    \"lossType\": page.lossType || \"\",\n    \"part_group_code\": page.damageGroup || page.part_group_code || \"\",\n    \"estimatedPartsCost\": Number(page.estimatedPartsCost || 0),\n    \"garageType\": page.garageType || \"\",\n    \"netPayable\": Number(page.netPayable || 0),\n    \"fire_file\": String(Boolean(page.firFilled))\n};\n\nconsole.log(\"api body------->\", claimData);\n\n// Final Payload Construction\nbh.local.caseBody = {\n    \"caseType\": \"motor-damage-claim\",\n    \"caseData\": claimData,\n    \"wfData\": claimData\n};\n\nconsole.log(\"Dynamic Payload:\", bh.local.caseBody);\n// Debug Log\nconsole.log(\"Case Service Payload:\", bh.local.caseBody);\n\nconsole.log(\"token----------->\", bh.local.token)\nbh.local.bpmHeader = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\",\n    \"Content-Length\": \"<calculated when request is sent>\",\n    \"Host\": \"<calculated when request is sent>\",\n    \"User-Agent\": \"PostmanRuntime/7.56.1\",\n    \"Accept\": \"*/*\",\n    \"Accept-Encoding\": \"gzip, deflate, br\",\n    \"Connection\": \"keep-alive\",\n    \"Authorization\": \"Bearer \" + bh.local.token\n};",
+        "script": "// // 1. Target Endpoint URL\n// bh.local.token=bh.local.tokenResponse.access_token;\n// bh.local.caseUrl = \"https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main\";\n\n// // 2. Request Headers (as shown in Postman)\n// // bh.local.headers = {\n// //     \"accept\": \"application/json\",\n// //     \"Content-Type\": \"application/json\",\n// //     \"Authorization\": \"Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN\"\n// // };\n\n// // 3. Request Payload (Body)\n// // Dynamic mapping from page and bh.local\n// const claimData = {\n//     \"claim_id\": bh.local.claimId || page.claimId,\n//     \"policy_number\": page.policyNumber || \"\",\n//     \"customerName\": page.customerName || \"\",\n//     \"vehicleRegistration\": page.registrationNumber || page.vehicleRegistration || \"\",\n//     \"vehicleType\": page.vehicleType || \"\",\n//     \"idv\": Number(page.price || page.idv || 0),\n//     \"date_of_loss\": page.dateofLoss || \"\",\n//     \"intimationDate\": page.intimationDate || new Date().toISOString().split('T')[0],\n//     \"lossType\": page.lossType || \"\",\n//     \"part_group_code\": page.damageGroup || page.part_group_code || \"\",\n//     \"estimatedPartsCost\": Number(page.estimatedPartsCost || 0),\n//     \"garageType\": page.garageType || \"\",\n//     \"netPayable\": Number(page.netPayable || 0),\n//     \"fire_file\": String(Boolean(page.firFilled))\n// };\n\n// console.log(\"api body------->\", claimData);\n\n// // Final Payload Construction\n// bh.local.caseBody = {\n//     \"caseType\": \"motor-damage-claim\",\n//     \"caseData\": claimData,\n//     \"wfData\": claimData\n// };\n\n// console.log(\"Dynamic Payload:\", bh.local.caseBody);\n// // Debug Log\n// console.log(\"Case Service Payload:\", bh.local.caseBody);\n\n// console.log(\"token----------->\", bh.local.token)\n// bh.local.bpmHeader = {\n//     \"Content-Type\": \"application/x-www-form-urlencoded\",\n//     \"Content-Length\": \"<calculated when request is sent>\",\n//     \"Host\": \"<calculated when request is sent>\",\n//     \"User-Agent\": \"PostmanRuntime/7.56.1\",\n//     \"Accept\": \"*/*\",\n//     \"Accept-Encoding\": \"gzip, deflate, br\",\n//     \"Connection\": \"keep-alive\",\n//     \"Authorization\": \"Bearer \" + bh.local.token\n// };",
         "functionName": "bpmCall",
         "category": "Function",
-        "x": 965,
-        "y": 360,
-        "wires": [
-            [
-                "sd_eYDssfNFPohmMifq"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "claim_intimation_formComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_eYDssfNFPohmMifq",
-        "type": "HttpRequest",
-        "z": "sd_9WnerbnCPfrUZ6Rb",
-        "viewType": "client-pages",
-        "nodeType": "flow",
-        "name": "",
-        "method": "post",
-        "methodMappingObj": {},
-        "urlMapping": "bh.local.caseUrl",
-        "urlMappingObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "caseUrl"
-        },
-        "ret": "json",
-        "retMappingObj": {},
-        "observe": "",
-        "observeMappingObj": {},
-        "reportProgress": false,
-        "withCreds": false,
-        "reqBody": "bh.local.caseBody",
-        "reqBodyObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "caseBody"
-        },
-        "resultMapping": "bh.local.caseResponse",
-        "resultMappingObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "caseResponse"
-        },
-        "headerMapping": "bh.local.bpmHeader",
-        "headerMappingObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "bpmHeader"
-        },
-        "params": {},
-        "paramsObj": [],
-        "paramMappingObj": {},
-        "functionName": "sd_eYDssfNFPohmMifq",
-        "category": "HTTP",
-        "x": 1085,
+        "x": 1025,
         "y": 360,
         "wires": [
             [
@@ -981,18 +852,40 @@
         "generated": true
     },
     {
-        "id": "sd_FozxYfWm9kGr5mem",
+        "id": "sd_zFak7feHHmQvqCbl",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "// Validation Check\nconst resultData = bh.local.reelResponse?.result || {};\n\n// UI Object initialize karein (agar page.result pehle se object na ho)\npage.result = page.result || {};\n\n// netPayable extract aur assign (with fallback to 0)\npage.result.netPayable = resultData.netPayable ?? 0;\n\n// Agar direct UI binding (page.netPayable) use kar rahe hain toh:\npage.netPayable = page.result.netPayable;\nconsole.log(\"netpayable=======>\",page.netPayable);\npage.dateofLossError = !page.dateofLoss ? \"Date of Loss is required\" : null;\npage.lossTypeError = !page.lossType ? \"Loss Type is required\" : null;\npage.damageGroupError = !page.damageGroup ? \"Damage Group is required\" : null;\npage.estimatedPartsCostError = !page.estimatedPartsCost ? \"Estimated Parts Cost is required\" : null;\npage.garageTypeError = !page.garageType ? \"Garage Type is required\" : null;\npage.descriptionError = !page.description ? \"Description is required\" : null;\n\nif (\n    page.policyNumberError || page.customerNameError || page.registrationNumberError ||\n    page.vehicleTypeError || page.priceError || page.dateofLossError ||\n    page.lossTypeError || page.damageGroupError || page.estimatedPartsCostError ||\n    page.garageTypeError || page.descriptionError\n) {\n    return;\n}\n\nconsole.log(\"yaha s\")\n\n// 1. Unique Claim ID Generation\nconst now = new Date();\nconst date =\n    now.getFullYear().toString() +\n    String(now.getMonth() + 1).padStart(2, '0') +\n    String(now.getDate()).padStart(2, '0');\n\nconst random = Math.floor(Math.random() * 99999)\n    .toString()\n    .padStart(5, '0');\n\nconsole.log(`CLM-${date}-${random}`)\nbh.local.claimId = `CLM-${date}-${random}`;\npage.claimId = bh.local.claimId; // UI display\n\n// 2. Save Claim Payload (Space typo fixed in loss_description)\nbh.local.claimUrl = \"https://motordamageclaimbackend.neutrinos-apps.com/api/claim\";\n//bh.local.claimUrl =\"http://localhost:8081/api/claim\";\nbh.local.claimBody = {\n    \"netPayable\":page.netPayable,\n    \"claim_id\": bh.local.claimId,\n    \"policy_no\": page.policyNumber || \"\",\n    \"Customer Name\": page.customerName || \"\",\n    \"Registration Number\": page.registrationNumber || \"\",\n    \"Vehicle Type\": page.vehicleType || \"\",\n    \"IDV\": Number(page.price) || 0,\n    \"date_of_loss\": page.dateofLoss || \"\",\n    \"loss_code\": page.lossType || \"\",\n    \"part_group_code\": page.damageGroup || \"\",\n    \"estimated_parts_cost\": String(page.estimatedPartsCost || 0),\n    \"garage_type\": page.garageType || \"\",\n    \"fir_filed\": Boolean(page.firFilled),\n    \"valid_licence\": Boolean(page.validDrivingLicense),\n    \"loss_description\": page.description || \"\"\n};\n\nconsole.log(\"body---\",bh.local.claimBody)",
+        "functionName": "sd_zFak7feHHmQvqCbl",
+        "category": "Function",
+        "x": 725,
+        "y": 360,
+        "wires": [
+            [
+                "sd_axumR5hFEsH9wfQS"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_axumR5hFEsH9wfQS",
         "type": "HttpRequest",
         "z": "sd_9WnerbnCPfrUZ6Rb",
         "viewType": "client-pages",
         "nodeType": "flow",
-        "name": "token request",
+        "name": "",
         "method": "post",
         "methodMappingObj": {},
-        "urlMapping": "bh.local.tokenUrl",
+        "urlMapping": "bh.local.claimUrl",
         "urlMappingObj": {
             "mapVarType": "bh.local",
-            "mapVarValue": "tokenUrl"
+            "mapVarValue": "claimUrl"
         },
         "ret": "json",
         "retMappingObj": {},
@@ -1000,31 +893,29 @@
         "observeMappingObj": {},
         "reportProgress": false,
         "withCreds": false,
-        "reqBody": "bh.local.tokenBody",
+        "reqBody": "bh.local.claimBody",
         "reqBodyObj": {
             "mapVarType": "bh.local",
-            "mapVarValue": "tokenBody"
+            "mapVarValue": "claimBody"
         },
-        "resultMapping": "bh.local.tokenResponse",
+        "resultMapping": "this.page.result",
         "resultMappingObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "tokenResponse"
+            "mapVarType": "this.page",
+            "mapVarValue": "result"
         },
-        "headerMapping": "bh.local.headers",
-        "headerMappingObj": {
-            "mapVarType": "bh.local",
-            "mapVarValue": "headers"
-        },
+        "headers": {},
+        "headersObj": [],
+        "headerMappingObj": {},
         "params": {},
         "paramsObj": [],
         "paramMappingObj": {},
-        "functionName": "tokenRequest",
+        "functionName": "sd_axumR5hFEsH9wfQS",
         "category": "HTTP",
         "x": 845,
         "y": 360,
         "wires": [
             [
-                "sd_0f7uORy7tzBonnkv"
+                "sd_4Zj3HM90EmhXvpCI"
             ]
         ],
         "__n_excludedFromValidation__": {},

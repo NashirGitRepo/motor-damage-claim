@@ -82,7 +82,7 @@ export class claim_intimation_formComponent {
         .constructFlowObject(this);
       bh.input = {};
       bh.local = {};
-      bh = this.sd_0MAEKkKdzwhSv3bL(bh);
+      bh = this.reelCall(bh);
       //appendnew_next_submitBtnClick
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_J96OZqIux1xO8U0e');
@@ -320,9 +320,79 @@ export class claim_intimation_formComponent {
     }
   }
 
-  sd_0MAEKkKdzwhSv3bL(bh) {
+  reelCall(bh) {
+    try {
+      const page = this.page;
+      console.log('Claim Saved Response:', page.result);
+
+      bh.local.reelsUrl =
+        'https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync';
+      bh.local.reelsBody = {
+        workflowId: 'ad335583-3836-4023-ba6e-e7fabe56a980',
+        version: '1.0.0',
+        inputObj: {
+          idv: Number(page.price),
+          Loss_Code: page.lossType,
+          Part_Group_Code: page.damageGroup,
+          'garage Type': page.garageType,
+          estimatedPartsCost: String(page.estimatedPartsCost),
+        },
+      };
+      console.log('reel body ', bh.local.reelsBody);
+      bh = this.sd_Z8JL80A17cHo3OFZ(bh);
+      //appendnew_next_reelCall
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_gmbjd7k6O04eokGw');
+    }
+  }
+
+  async sd_Z8JL80A17cHo3OFZ(bh) {
+    try {
+      let requestOptions = {
+        url: bh.local.reelsUrl,
+        method: 'post',
+        responseType: 'json',
+        headers: {
+          Cookie:
+            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
+          'Postman-Token': '<calculated when request is sent>',
+          'Content-Length': '<calculated when request is sent>',
+          Host: '<calculated when request is sent>',
+          'User-Agent': 'PostmanRuntime/7.56.0',
+          Accept: '*/*',
+          'Accept-Encoding': 'gzip, deflate, br',
+          Connection: 'keep-alive',
+          'Content-Type': 'application/json',
+          token:
+            'eb804c7f-993e-4387-9a4a-95b979fef9e6.2bdadd9bbdb1781eedaf6a5fee0c625533fb8029903aa0a7d27feac2551c0342',
+        },
+        params: {},
+        body: bh.local.reelsBody,
+      };
+      bh.local.reelResponse = await this.sdService.nHttpRequest(requestOptions);
+      bh = this.sd_zFak7feHHmQvqCbl(bh);
+      //appendnew_next_sd_Z8JL80A17cHo3OFZ
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_Z8JL80A17cHo3OFZ');
+    }
+  }
+
+  sd_zFak7feHHmQvqCbl(bh) {
     try {
       const page = this.page; // Validation Check
+      const resultData = bh.local.reelResponse?.result || {};
+
+      // UI Object initialize karein (agar page.result pehle se object na ho)
+      page.result = page.result || {};
+
+      // netPayable extract aur assign (with fallback to 0)
+      page.result.netPayable = resultData.netPayable ?? 0;
+
+      // Agar direct UI binding (page.netPayable) use kar rahe hain toh:
+      page.netPayable = page.result.netPayable;
+      console.log('netpayable=======>', page.netPayable);
       page.dateofLossError = !page.dateofLoss
         ? 'Date of Loss is required'
         : null;
@@ -376,7 +446,9 @@ export class claim_intimation_formComponent {
       // 2. Save Claim Payload (Space typo fixed in loss_description)
       bh.local.claimUrl =
         'https://motordamageclaimbackend.neutrinos-apps.com/api/claim';
+      //bh.local.claimUrl ="http://localhost:8081/api/claim";
       bh.local.claimBody = {
+        netPayable: page.netPayable,
         claim_id: bh.local.claimId,
         policy_no: page.policyNumber || '',
         'Customer Name': page.customerName || '',
@@ -394,15 +466,15 @@ export class claim_intimation_formComponent {
       };
 
       console.log('body---', bh.local.claimBody);
-      bh = this.sd_0bqkCP4Lfzd1QZLB(bh);
-      //appendnew_next_sd_0MAEKkKdzwhSv3bL
+      bh = this.sd_axumR5hFEsH9wfQS(bh);
+      //appendnew_next_sd_zFak7feHHmQvqCbl
       return bh;
     } catch (e) {
-      return this.errorHandler(bh, e, 'sd_0MAEKkKdzwhSv3bL');
+      return this.errorHandler(bh, e, 'sd_zFak7feHHmQvqCbl');
     }
   }
 
-  async sd_0bqkCP4Lfzd1QZLB(bh) {
+  async sd_axumR5hFEsH9wfQS(bh) {
     try {
       let requestOptions = {
         url: bh.local.claimUrl,
@@ -413,70 +485,11 @@ export class claim_intimation_formComponent {
         body: bh.local.claimBody,
       };
       this.page.result = await this.sdService.nHttpRequest(requestOptions);
-      bh = this.reelCall(bh);
-      //appendnew_next_sd_0bqkCP4Lfzd1QZLB
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_0bqkCP4Lfzd1QZLB');
-    }
-  }
-
-  reelCall(bh) {
-    try {
-      const page = this.page;
-      console.log('Claim Saved Response:', page.result);
-
-      bh.local.reelsUrl =
-        'https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync';
-      bh.local.reelsBody = {
-        workflowId: 'ad335583-3836-4023-ba6e-e7fabe56a980',
-        version: '1.0.0',
-        inputObj: {
-          idv: Number(page.price),
-          Loss_Code: page.lossType,
-          Part_Group_Code: page.damageGroup,
-          'garage Type': page.garageType,
-          estimatedPartsCost: String(page.estimatedPartsCost),
-        },
-      };
-      console.log('reel body ', bh.local.reelsBody);
-      bh = this.sd_Z8JL80A17cHo3OFZ(bh);
-      //appendnew_next_reelCall
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_gmbjd7k6O04eokGw');
-    }
-  }
-
-  async sd_Z8JL80A17cHo3OFZ(bh) {
-    try {
-      let requestOptions = {
-        url: bh.local.reelsUrl,
-        method: 'post',
-        responseType: 'json',
-        headers: {
-          Cookie:
-            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
-          'Postman-Token': '<calculated when request is sent>',
-          'Content-Length': '<calculated when request is sent>',
-          Host: '<calculated when request is sent>',
-          'User-Agent': 'PostmanRuntime/7.56.0',
-          Accept: '*/*',
-          'Accept-Encoding': 'gzip, deflate, br',
-          Connection: 'keep-alive',
-          'Content-Type': 'application/json',
-          token:
-            'eb804c7f-993e-4387-9a4a-95b979fef9e6.2bdadd9bbdb1781eedaf6a5fee0c625533fb8029903aa0a7d27feac2551c0342',
-        },
-        params: {},
-        body: bh.local.reelsBody,
-      };
-      bh.local.reelResponse = await this.sdService.nHttpRequest(requestOptions);
       bh = this.sd_4Zj3HM90EmhXvpCI(bh);
-      //appendnew_next_sd_Z8JL80A17cHo3OFZ
+      //appendnew_next_sd_axumR5hFEsH9wfQS
       return bh;
     } catch (e) {
-      return this.errorHandler(bh, e, 'sd_Z8JL80A17cHo3OFZ');
+      return this.errorHandler(bh, e, 'sd_axumR5hFEsH9wfQS');
     }
   }
 
@@ -485,49 +498,46 @@ export class claim_intimation_formComponent {
       const page = this.page;
       console.log('Submit btn result---->', page.result);
 
-      console.log('reel response', bh.local.reelResponse);
-      // Response data safely extract karein
-      const resultData = bh.local.reelResponse?.result || {};
+      // console.log("reel response",bh.local.reelResponse);
+      // // Response data safely extract karein
+      // const resultData = bh.local.reelResponse?.result || {};
 
-      // UI Object initialize karein (agar page.result pehle se object na ho)
-      page.result = page.result || {};
+      // // UI Object initialize karein (agar page.result pehle se object na ho)
+      // page.result = page.result || {};
 
-      // netPayable extract aur assign (with fallback to 0)
-      page.result.netPayable = resultData.netPayable ?? 0;
+      // // netPayable extract aur assign (with fallback to 0)
+      // page.result.netPayable = resultData.netPayable ?? 0;
 
-      // Agar direct UI binding (page.netPayable) use kar rahe hain toh:
-      page.netPayable = page.result.netPayable;
+      // // Agar direct UI binding (page.netPayable) use kar rahe hain toh:
+      // page.netPayable = page.result.netPayable;
 
-      console.log('Assigned Net Payable:', page.result.netPayable);
-      // 1. Token Endpoint URL
-      bh.local.tokenUrl = 'https://ids-ctr-pt.neutrinos-apps.com/token';
+      // console.log("Assigned Net Payable:", page.result.netPayable);
+      // // 1. Token Endpoint URL
+      // bh.local.tokenUrl = "https://ids-ctr-pt.neutrinos-apps.com/token";
 
-      // 2. Headers
-      bh.local.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': '<calculated when request is sent>',
-        Host: '<calculated when request is sent>',
-        'User-Agent': 'PostmanRuntime/7.56.1',
-        Accept: '*/*',
-        'Accept-Encoding': 'gzip, deflate, br',
-        Connection: 'keep-alive',
-      };
+      // // 2. Headers
+      // bh.local.headers = {
+      //     "Content-Type": "application/x-www-form-urlencoded",
+      //     "Content-Length": "<calculated when request is sent>",
+      //     "Host": "<calculated when request is sent>",
+      //     "User-Agent": "PostmanRuntime/7.56.1",
+      //     "Accept": "*/*",
+      //     "Accept-Encoding": "gzip, deflate, br",
+      //     "Connection": "keep-alive"
+      // };
 
-      // 3. Body (x-www-form-urlencoded format)
-      const params = new URLSearchParams();
-      params.append('client_id', '0ddh_euTKkSA682Yy5HuC');
-      params.append(
-        'client_secret',
-        'e28WZR6ZKyrYILTSKKClFEwNlYoGR2cvISwFCoIXP4S7DJgsaqhHRSNqpoWgYbcx_DUlrSkoA1zS5uFOzP-J9C'
-      ); // Replace with complete secret
-      params.append('grant_type', 'client_credentials');
+      // // 3. Body (x-www-form-urlencoded format)
+      // const params = new URLSearchParams();
+      // params.append("client_id", "0ddh_euTKkSA682Yy5HuC");
+      // params.append("client_secret", "e28WZR6ZKyrYILTSKKClFEwNlYoGR2cvISwFCoIXP4S7DJgsaqhHRSNqpoWgYbcx_DUlrSkoA1zS5uFOzP-J9C"); // Replace with complete secret
+      // params.append("grant_type", "client_credentials");
 
-      bh.local.tokenBody = params.toString();
+      // bh.local.tokenBody = params.toString();
 
-      // Debug Log
-      console.log('Token Request Body:', bh.local.tokenBody);
+      // // Debug Log
+      // console.log("Token Request Body:", bh.local.tokenBody);
 
-      bh = this.tokenRequest(bh);
+      bh = this.bpmCall(bh);
       //appendnew_next_sd_4Zj3HM90EmhXvpCI
       return bh;
     } catch (e) {
@@ -535,110 +545,67 @@ export class claim_intimation_formComponent {
     }
   }
 
-  async tokenRequest(bh) {
-    try {
-      let requestOptions = {
-        url: bh.local.tokenUrl,
-        method: 'post',
-        responseType: 'json',
-        headers: bh.local.headers,
-        params: {},
-        body: bh.local.tokenBody,
-      };
-      bh.local.tokenResponse = await this.sdService.nHttpRequest(
-        requestOptions
-      );
-      bh = this.bpmCall(bh);
-      //appendnew_next_tokenRequest
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_FozxYfWm9kGr5mem');
-    }
-  }
-
   bpmCall(bh) {
     try {
-      const page = this.page; // 1. Target Endpoint URL
-      bh.local.token = bh.local.tokenResponse.access_token;
-      bh.local.caseUrl =
-        'https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main';
+      const page = this.page; // // 1. Target Endpoint URL
+      // bh.local.token=bh.local.tokenResponse.access_token;
+      // bh.local.caseUrl = "https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main";
 
-      // 2. Request Headers (as shown in Postman)
-      // bh.local.headers = {
-      //     "accept": "application/json",
-      //     "Content-Type": "application/json",
-      //     "Authorization": "Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
+      // // 2. Request Headers (as shown in Postman)
+      // // bh.local.headers = {
+      // //     "accept": "application/json",
+      // //     "Content-Type": "application/json",
+      // //     "Authorization": "Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
+      // // };
+
+      // // 3. Request Payload (Body)
+      // // Dynamic mapping from page and bh.local
+      // const claimData = {
+      //     "claim_id": bh.local.claimId || page.claimId,
+      //     "policy_number": page.policyNumber || "",
+      //     "customerName": page.customerName || "",
+      //     "vehicleRegistration": page.registrationNumber || page.vehicleRegistration || "",
+      //     "vehicleType": page.vehicleType || "",
+      //     "idv": Number(page.price || page.idv || 0),
+      //     "date_of_loss": page.dateofLoss || "",
+      //     "intimationDate": page.intimationDate || new Date().toISOString().split('T')[0],
+      //     "lossType": page.lossType || "",
+      //     "part_group_code": page.damageGroup || page.part_group_code || "",
+      //     "estimatedPartsCost": Number(page.estimatedPartsCost || 0),
+      //     "garageType": page.garageType || "",
+      //     "netPayable": Number(page.netPayable || 0),
+      //     "fire_file": String(Boolean(page.firFilled))
       // };
 
-      // 3. Request Payload (Body)
-      // Dynamic mapping from page and bh.local
-      const claimData = {
-        claim_id: bh.local.claimId || page.claimId,
-        policy_number: page.policyNumber || '',
-        customerName: page.customerName || '',
-        vehicleRegistration:
-          page.registrationNumber || page.vehicleRegistration || '',
-        vehicleType: page.vehicleType || '',
-        idv: Number(page.price || page.idv || 0),
-        date_of_loss: page.dateofLoss || '',
-        intimationDate:
-          page.intimationDate || new Date().toISOString().split('T')[0],
-        lossType: page.lossType || '',
-        part_group_code: page.damageGroup || page.part_group_code || '',
-        estimatedPartsCost: Number(page.estimatedPartsCost || 0),
-        garageType: page.garageType || '',
-        netPayable: Number(page.netPayable || 0),
-        fire_file: String(Boolean(page.firFilled)),
-      };
+      // console.log("api body------->", claimData);
 
-      console.log('api body------->', claimData);
+      // // Final Payload Construction
+      // bh.local.caseBody = {
+      //     "caseType": "motor-damage-claim",
+      //     "caseData": claimData,
+      //     "wfData": claimData
+      // };
 
-      // Final Payload Construction
-      bh.local.caseBody = {
-        caseType: 'motor-damage-claim',
-        caseData: claimData,
-        wfData: claimData,
-      };
+      // console.log("Dynamic Payload:", bh.local.caseBody);
+      // // Debug Log
+      // console.log("Case Service Payload:", bh.local.caseBody);
 
-      console.log('Dynamic Payload:', bh.local.caseBody);
-      // Debug Log
-      console.log('Case Service Payload:', bh.local.caseBody);
-
-      console.log('token----------->', bh.local.token);
-      bh.local.bpmHeader = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': '<calculated when request is sent>',
-        Host: '<calculated when request is sent>',
-        'User-Agent': 'PostmanRuntime/7.56.1',
-        Accept: '*/*',
-        'Accept-Encoding': 'gzip, deflate, br',
-        Connection: 'keep-alive',
-        Authorization: 'Bearer ' + bh.local.token,
-      };
-      bh = this.sd_eYDssfNFPohmMifq(bh);
+      // console.log("token----------->", bh.local.token)
+      // bh.local.bpmHeader = {
+      //     "Content-Type": "application/x-www-form-urlencoded",
+      //     "Content-Length": "<calculated when request is sent>",
+      //     "Host": "<calculated when request is sent>",
+      //     "User-Agent": "PostmanRuntime/7.56.1",
+      //     "Accept": "*/*",
+      //     "Accept-Encoding": "gzip, deflate, br",
+      //     "Connection": "keep-alive",
+      //     "Authorization": "Bearer " + bh.local.token
+      // };
+      bh = this.openSuccessDialog(bh);
       //appendnew_next_bpmCall
       return bh;
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_0f7uORy7tzBonnkv');
-    }
-  }
-
-  async sd_eYDssfNFPohmMifq(bh) {
-    try {
-      let requestOptions = {
-        url: bh.local.caseUrl,
-        method: 'post',
-        responseType: 'json',
-        headers: bh.local.bpmHeader,
-        params: {},
-        body: bh.local.caseBody,
-      };
-      bh.local.caseResponse = await this.sdService.nHttpRequest(requestOptions);
-      bh = this.openSuccessDialog(bh);
-      //appendnew_next_sd_eYDssfNFPohmMifq
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_eYDssfNFPohmMifq');
     }
   }
 
