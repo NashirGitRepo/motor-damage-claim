@@ -94,6 +94,7 @@ export class claim_intimation_formComponent {
     try {
       const page = this.page;
       page.showContent = false;
+      page.today = new Date();
       bh.local.lossCodeUrl =
         'https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9';
       bh.local.requestBody = {
@@ -233,15 +234,15 @@ export class claim_intimation_formComponent {
   sd_VLLBbpobJg2qW8VV(bh) {
     try {
       const page = this.page;
-      page.policyNumberError = null;
+      page.policyError = null;
 
       if (!page.policyNumber || page.policyNumber.trim().length === 0) {
         reloadForm();
-        page.policyNumberError = 'Policy Number is required';
+        page.policyError = 'Policy Number is required';
         return;
       } else if (!/^MTR-\d{8}$/.test(page.policyNumber.trim())) {
         reloadForm();
-        page.policyNumberError =
+        page.policyError =
           'Please enter a valid MTR Number (e.g. MTR-12345678)';
         return;
       }
@@ -289,7 +290,7 @@ export class claim_intimation_formComponent {
         body: undefined,
       };
       bh.local.result = await this.sdService.nHttpRequest(requestOptions);
-      bh = this.sd_cBhhsmxFIDP0hbY6(bh);
+      bh = this.responseFromPolicyFetch(bh);
       //appendnew_next_fetchPolicyGetRequestInBlock
       return bh;
     } catch (e) {
@@ -297,23 +298,62 @@ export class claim_intimation_formComponent {
     }
   }
 
-  sd_cBhhsmxFIDP0hbY6(bh) {
+  responseFromPolicyFetch(bh) {
     try {
       const page = this.page;
+      // let result=bh.local.result
+      // console.log("=========",result);
+      // if(result && result.length>0){
+      //     page.customerName = result[0].customer_name;
+      //     page.registrationNumber = result[0].vehicle_reg;
+      //     page.vehicleType = result[0].vehicle_type;
+      //     page.price = result[0].idv;
+
+      //     page.showContent = true;
+      // }
+      // else{
+      //    alert("Policy Id: " + page.policyNumber + " doesn't exist");
+      //    window.location.reload();
+      // }
       let result = bh.local.result;
-      console.log('=========', result);
-      if (result && result.length > 0) {
+
+      console.log('Backend Result========>:', result);
+
+      // Case 1: Backend se Error Object aaya { "error": "Policy Not Found" }
+      if (result && result.error) {
+        alert(`Policy Id: ${page.policyNumber} - ${result.error}`);
+        page.showContent = false;
+        page.errorMessage = result.error;
+      }
+      // Case 2: Direct Success Array aaya [{ customer_name: '...', ... }]
+      else if (Array.isArray(result) && result.length > 0) {
         page.customerName = result[0].customer_name;
         page.registrationNumber = result[0].vehicle_reg;
         page.vehicleType = result[0].vehicle_type;
         page.price = result[0].idv;
 
         page.showContent = true;
-      } else {
-        alert('Policy Id: ' + page.policyNumber + " doesn't exist");
-        window.location.reload();
+        page.errorMessage = '';
       }
-      //appendnew_next_sd_cBhhsmxFIDP0hbY6
+      // Case 3: Success Object aaya jiske andar data array/object hai
+      else if (result && result.data) {
+        let data = Array.isArray(result.data) ? result.data[0] : result.data;
+
+        page.customerName = data.customer_name || data.customerName;
+        page.registrationNumber = data.vehicle_reg || data.registrationNumber;
+        page.vehicleType = data.vehicle_type || data.vehicleType;
+        page.price = data.idv || data.price;
+
+        page.showContent = true;
+        page.errorMessage = '';
+      }
+      // Case 4: Empty Result ya Unknown Object
+      else {
+        alert(`Policy Id: ${page.policyNumber} doesn't exist`);
+        page.showContent = false;
+        page.errorMessage = 'Policy details not found';
+      }
+      //appendnew_next_responseFromPolicyFetch
       return bh;
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_cBhhsmxFIDP0hbY6');
@@ -322,24 +362,22 @@ export class claim_intimation_formComponent {
 
   reelCall(bh) {
     try {
-      const page = this.page;
-      console.log('Claim Saved Response:', page.result);
+      const page = this.page; // console.log("Claim Saved Response:", page.result);
 
-      bh.local.reelsUrl =
-        'https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync';
-      bh.local.reelsBody = {
-        workflowId: 'ad335583-3836-4023-ba6e-e7fabe56a980',
-        version: '1.0.0',
-        inputObj: {
-          idv: Number(page.price),
-          Loss_Code: page.lossType,
-          Part_Group_Code: page.damageGroup,
-          'garage Type': page.garageType,
-          estimatedPartsCost: String(page.estimatedPartsCost),
-        },
-      };
-      console.log('reel body ', bh.local.reelsBody);
-      bh = this.sd_Z8JL80A17cHo3OFZ(bh);
+      // bh.local.reelsUrl = "https://reels-pt.neutrinos-apps.com/integration/api/runtime/sync";
+      // bh.local.reelsBody = {
+      //     "workflowId": "ad335583-3836-4023-ba6e-e7fabe56a980",
+      //     "version": "1.0.0",
+      //     "inputObj": {
+      //         "idv": Number(page.price),
+      //         "Loss_Code": page.lossType,
+      //         "Part_Group_Code": page.damageGroup,
+      //         "garage Type": page.garageType,
+      //         "estimatedPartsCost": String(page.estimatedPartsCost)
+      //     }
+      // };
+      // console.log("reel body ",bh.local.reelsBody);
+      bh = this.sd_zFak7feHHmQvqCbl(bh);
       //appendnew_next_reelCall
       return bh;
     } catch (e) {
@@ -347,52 +385,20 @@ export class claim_intimation_formComponent {
     }
   }
 
-  async sd_Z8JL80A17cHo3OFZ(bh) {
-    try {
-      let requestOptions = {
-        url: bh.local.reelsUrl,
-        method: 'post',
-        responseType: 'json',
-        headers: {
-          Cookie:
-            'asid=s%3AgCHIeYCl7AW1V2UukFLU-y7L9-BQLjbj.p21neqFfhl3QT%2F9SoM8e3DIEanU1e%2BHaakbQkQnGWgE',
-          'Postman-Token': '<calculated when request is sent>',
-          'Content-Length': '<calculated when request is sent>',
-          Host: '<calculated when request is sent>',
-          'User-Agent': 'PostmanRuntime/7.56.0',
-          Accept: '*/*',
-          'Accept-Encoding': 'gzip, deflate, br',
-          Connection: 'keep-alive',
-          'Content-Type': 'application/json',
-          token:
-            'eb804c7f-993e-4387-9a4a-95b979fef9e6.2bdadd9bbdb1781eedaf6a5fee0c625533fb8029903aa0a7d27feac2551c0342',
-        },
-        params: {},
-        body: bh.local.reelsBody,
-      };
-      bh.local.reelResponse = await this.sdService.nHttpRequest(requestOptions);
-      bh = this.sd_zFak7feHHmQvqCbl(bh);
-      //appendnew_next_sd_Z8JL80A17cHo3OFZ
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_Z8JL80A17cHo3OFZ');
-    }
-  }
-
   sd_zFak7feHHmQvqCbl(bh) {
     try {
       const page = this.page; // Validation Check
-      const resultData = bh.local.reelResponse?.result || {};
+      //const resultData = bh.local.reelResponse?.result || {};
 
       // UI Object initialize karein (agar page.result pehle se object na ho)
-      page.result = page.result || {};
+      //page.result = page.result || {};
 
       // netPayable extract aur assign (with fallback to 0)
-      page.result.netPayable = resultData.netPayable ?? 0;
+      //page.result.netPayable = resultData.netPayable ?? 0;
 
       // Agar direct UI binding (page.netPayable) use kar rahe hain toh:
-      page.netPayable = page.result.netPayable;
-      console.log('netpayable=======>', page.netPayable);
+      //page.netPayable = page.result.netPayable;
+      //console.log("netpayable=======>",page.netPayable);
       page.dateofLossError = !page.dateofLoss
         ? 'Date of Loss is required'
         : null;
@@ -448,7 +454,6 @@ export class claim_intimation_formComponent {
         'https://motordamageclaimbackend.neutrinos-apps.com/api/claim';
       //bh.local.claimUrl ="http://localhost:8081/api/claim";
       bh.local.claimBody = {
-        netPayable: page.netPayable,
         claim_id: bh.local.claimId,
         policy_no: page.policyNumber || '',
         'Customer Name': page.customerName || '',
@@ -496,7 +501,7 @@ export class claim_intimation_formComponent {
   sd_4Zj3HM90EmhXvpCI(bh) {
     try {
       const page = this.page;
-      console.log('Submit btn result---->', page.result);
+      console.log('Submit btn result----><=================>', page.result);
 
       // console.log("reel response",bh.local.reelResponse);
       // // Response data safely extract karein
@@ -537,7 +542,7 @@ export class claim_intimation_formComponent {
       // // Debug Log
       // console.log("Token Request Body:", bh.local.tokenBody);
 
-      bh = this.bpmCall(bh);
+      bh = this.netPayableCall(bh);
       //appendnew_next_sd_4Zj3HM90EmhXvpCI
       return bh;
     } catch (e) {
@@ -545,67 +550,49 @@ export class claim_intimation_formComponent {
     }
   }
 
-  bpmCall(bh) {
+  netPayableCall(bh) {
     try {
-      const page = this.page; // // 1. Target Endpoint URL
-      // bh.local.token=bh.local.tokenResponse.access_token;
-      // bh.local.caseUrl = "https://alpha-pt.neutrinos-apps.com/caseservice/case/instance/create?branch=main";
-
-      // // 2. Request Headers (as shown in Postman)
-      // // bh.local.headers = {
-      // //     "accept": "application/json",
-      // //     "Content-Type": "application/json",
-      // //     "Authorization": "Bearer nqHeehdeVmv4_iv6JwN8xWiYSiCSiDoZg8il90OcUaN"
-      // // };
-
-      // // 3. Request Payload (Body)
-      // // Dynamic mapping from page and bh.local
-      // const claimData = {
-      //     "claim_id": bh.local.claimId || page.claimId,
-      //     "policy_number": page.policyNumber || "",
-      //     "customerName": page.customerName || "",
-      //     "vehicleRegistration": page.registrationNumber || page.vehicleRegistration || "",
-      //     "vehicleType": page.vehicleType || "",
-      //     "idv": Number(page.price || page.idv || 0),
-      //     "date_of_loss": page.dateofLoss || "",
-      //     "intimationDate": page.intimationDate || new Date().toISOString().split('T')[0],
-      //     "lossType": page.lossType || "",
-      //     "part_group_code": page.damageGroup || page.part_group_code || "",
-      //     "estimatedPartsCost": Number(page.estimatedPartsCost || 0),
-      //     "garageType": page.garageType || "",
-      //     "netPayable": Number(page.netPayable || 0),
-      //     "fire_file": String(Boolean(page.firFilled))
-      // };
-
-      // console.log("api body------->", claimData);
-
-      // // Final Payload Construction
-      // bh.local.caseBody = {
-      //     "caseType": "motor-damage-claim",
-      //     "caseData": claimData,
-      //     "wfData": claimData
-      // };
-
-      // console.log("Dynamic Payload:", bh.local.caseBody);
-      // // Debug Log
-      // console.log("Case Service Payload:", bh.local.caseBody);
-
-      // console.log("token----------->", bh.local.token)
-      // bh.local.bpmHeader = {
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //     "Content-Length": "<calculated when request is sent>",
-      //     "Host": "<calculated when request is sent>",
-      //     "User-Agent": "PostmanRuntime/7.56.1",
-      //     "Accept": "*/*",
-      //     "Accept-Encoding": "gzip, deflate, br",
-      //     "Connection": "keep-alive",
-      //     "Authorization": "Bearer " + bh.local.token
-      // };
-      bh = this.openSuccessDialog(bh);
-      //appendnew_next_bpmCall
+      const page = this.page;
+      bh.local.netPayableUrl =
+        'https://motordamageclaimbackend.neutrinos-apps.com/api/findNetPayable/' +
+        bh.local.claimId;
+      bh = this.sd_FRlyE9oCDigQdiH5(bh);
+      //appendnew_next_netPayableCall
       return bh;
     } catch (e) {
       return this.errorHandler(bh, e, 'sd_0f7uORy7tzBonnkv');
+    }
+  }
+
+  async sd_FRlyE9oCDigQdiH5(bh) {
+    try {
+      let requestOptions = {
+        url: bh.local.netPayableUrl,
+        method: 'get',
+        responseType: 'json',
+        headers: {},
+        params: {},
+        body: undefined,
+      };
+      this.page.netPayableResponse = await this.sdService.nHttpRequest(
+        requestOptions
+      );
+      bh = this.sd_NqAH0PwYIMI9DmGo(bh);
+      //appendnew_next_sd_FRlyE9oCDigQdiH5
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_FRlyE9oCDigQdiH5');
+    }
+  }
+
+  sd_NqAH0PwYIMI9DmGo(bh) {
+    try {
+      const page = this.page; //console.log(" netPayableResponse=======================>>>>",page.netPayableResponse);
+      bh = this.openSuccessDialog(bh);
+      //appendnew_next_sd_NqAH0PwYIMI9DmGo
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_NqAH0PwYIMI9DmGo');
     }
   }
 
@@ -623,6 +610,45 @@ export class claim_intimation_formComponent {
     }
   }
 
+  sd_1sAV9i3TFLZUdw4q(bh) {
+    try {
+      const page = this.page; // Catch Node bh.error object receive karta hai
+      let errObj = bh.error?.error || bh.error;
+      page.policyError = errObj?.error;
+      console.log('Captured Error in Catch Node:======>', errObj?.error);
+
+      let backendMsg = 'Policy details not found';
+
+      // Error structure handling
+      if (typeof errObj === 'string') {
+        try {
+          let parsed = JSON.parse(errObj);
+          backendMsg = parsed.error || backendMsg;
+        } catch (e) {
+          backendMsg = errObj;
+        }
+      } else if (errObj && errObj.error) {
+        backendMsg = errObj.error;
+      } else if (errObj && errObj.message) {
+        backendMsg = errObj.message;
+      }
+
+      // UI Alert and State Reset
+      //alert(`Policy Id: ${page.policyNumber || ''} - ${backendMsg}`);
+
+      page.showContent = false;
+      page.errorMessage = backendMsg;
+      page.customerName = '';
+      page.registrationNumber = '';
+      page.vehicleType = '';
+      page.price = '';
+      //appendnew_next_sd_1sAV9i3TFLZUdw4q
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_1sAV9i3TFLZUdw4q');
+    }
+  }
+
   //appendnew_node
 
   ngOnDestroy() {
@@ -637,7 +663,24 @@ export class claim_intimation_formComponent {
     console.error(e);
     bh.error = e;
     bh.errorSource = src;
-    throw e;
+    if (
+      false ||
+      this.sd_Jw8eiccG9IUhXR1F(bh)
+      /*appendnew_next_Catch*/
+    ) {
+      return bh;
+    } else {
+      throw e;
+    }
+  }
+  sd_Jw8eiccG9IUhXR1F(bh) {
+    const nodes = ['sd_X7INKMj0nHHGPBl5', 'sd_cBhhsmxFIDP0hbY6'];
+    if (nodes.includes(bh.errorSource)) {
+      bh = this.sd_1sAV9i3TFLZUdw4q(bh);
+      //appendnew_next_sd_Jw8eiccG9IUhXR1F
+      return true;
+    }
+    return false;
   }
   //appendnew_flow_claim_intimation_formComponent_Catch
 }

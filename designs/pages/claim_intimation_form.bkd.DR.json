@@ -477,7 +477,7 @@
                                 },
                                 {
                                     "_key": "Error Message",
-                                    "_value": "{{page.policyNumberError}}",
+                                    "_value": "{{page.policyError}}",
                                     "_type": "a",
                                     "_attrDef": "p",
                                     "_visibility": true,
@@ -485,7 +485,7 @@
                                 },
                                 {
                                     "_key": "Error Condition",
-                                    "_value": "page.policyNumberError",
+                                    "_value": "page.policyError",
                                     "_type": "a",
                                     "_attrDef": "p",
                                     "_visibility": true,
@@ -1911,7 +1911,7 @@
                             },
                             {
                                 "_key": "[max]",
-                                "_value": "",
+                                "_value": "page.today",
                                 "_type": "kv",
                                 "_attrDef": "p"
                             },

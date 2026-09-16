@@ -8,7 +8,7 @@
           <mat-form-field color="primary" class="custom-input" [appearance]="&apos;legacy&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
             <input matInput [(ngModel)]="page.policyNumber" name="policyNumber" placeholder="Enter policy number.." [required]="true">
 
-          </mat-form-field><mat-error align *ngIf="page.policyNumberError">{{page.policyNumberError}}</mat-error><button mat-button class="fetch-btn" (click)="fetchPolicyDetails()">Fetch</button>
+          </mat-form-field><mat-error align *ngIf="page.policyError">{{page.policyError}}</mat-error><button mat-button class="fetch-btn" (click)="fetchPolicyDetails()">Fetch</button>
         </div>
       </form>
       <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
@@ -45,7 +45,7 @@
       <div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="page.showContent">
         <mat-form-field [appearance]="&apos;legacy&apos;">
           <mat-label>Date of Loss</mat-label>
-          <input matInput placeholder="Date Of Loss" [matDatepicker]="picker" [(ngModel)]="page.dateofLoss" name="dateofLoss" [required]="true" [disabled]="true">
+          <input matInput placeholder="Date Of Loss" [matDatepicker]="picker" [(ngModel)]="page.dateofLoss" name="dateofLoss" [max]="page.today" [required]="true" [disabled]="true">
           <mat-datepicker-toggle matSuffix [for]="picker" disabled="false"></mat-datepicker-toggle>
           <mat-datepicker #picker [disabled]="false" startView="multi-year" touchUi="true"></mat-datepicker>
 
