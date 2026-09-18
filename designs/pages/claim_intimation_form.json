@@ -377,7 +377,7 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "page.showContent = false;\npage.today=new Date();\nbh.local.lossCodeUrl=\"https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9\";\nbh.local.requestBody={\n  \"pageNumber\": 0,\n  \"pageSize\": 100,\n  \"filter\": {}\n}",
+        "script": "page.showContent = false;\npage.today=new Date();\nconsole.log(\"page today date ------>\",page.today);\nbh.local.lossCodeUrl=\"https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9\";\nbh.local.requestBody={\n  \"pageNumber\": 0,\n  \"pageSize\": 100,\n  \"filter\": {}\n}",
         "functionName": "sd_yT6rnZXFFNl3M5ml",
         "category": "Function",
         "x": 285,
