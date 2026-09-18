@@ -7,7 +7,7 @@ export const environment = {
         "appName": "motor-claim-frontend",
         "namespace": "com.neutrinos-training.motor-claim-frontend",
         "useDefaultExceptionUI": true,
-        "isIDSEnabled": "false",
+        "isIDSEnabled": "true",
         "webAppMountpoint": "web",
         "NGFORAGE_MOBILE_DRIVER": "INDEXED_DB"
     }

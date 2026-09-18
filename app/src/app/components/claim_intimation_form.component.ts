@@ -10,6 +10,7 @@ import { SuccessPageComponent } from 'app/components/SuccessPage.component'; //_
 import { SDPageCommonService } from 'app/n-services/sd-page-common.service'; //_splitter_
 import { SDBaseService } from 'app/n-services/SDBaseService'; //_splitter_
 import { NeuServiceInvokerService } from 'app/n-services/service-caller.service'; //_splitter_
+import { NeutrinosOAuthClientService } from 'neutrinos-oauth-client'; //_splitter_
 //append_imports_end
 
 @Component({
@@ -51,7 +52,7 @@ export class claim_intimation_formComponent {
 
   sd_08aEHOpNqX0gjp5R(bh) {
     try {
-      bh = this.sd_yT6rnZXFFNl3M5ml(bh);
+      bh = this.sd_avKP1Ku3TKd5gMMD(bh);
       //appendnew_next_sd_08aEHOpNqX0gjp5R
       return bh;
     } catch (e) {
@@ -89,6 +90,31 @@ export class claim_intimation_formComponent {
     }
   }
   //appendnew_flow_claim_intimation_formComponent_start
+
+  sd_avKP1Ku3TKd5gMMD(bh) {
+    try {
+      this.page.noc = this.__page_injector__.get(NeutrinosOAuthClientService);
+      bh = this.sd_z32FIUzZS57J5mvA(bh);
+      //appendnew_next_sd_avKP1Ku3TKd5gMMD
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_avKP1Ku3TKd5gMMD');
+    }
+  }
+
+  async sd_z32FIUzZS57J5mvA(bh) {
+    try {
+      const page = this.page;
+      if (!page.noc.isLoggedIn) {
+        await page.noc.login('intimationform');
+      }
+      bh = this.sd_yT6rnZXFFNl3M5ml(bh);
+      //appendnew_next_sd_z32FIUzZS57J5mvA
+      return bh;
+    } catch (e) {
+      return this.errorHandler(bh, e, 'sd_z32FIUzZS57J5mvA');
+    }
+  }
 
   sd_yT6rnZXFFNl3M5ml(bh) {
     try {

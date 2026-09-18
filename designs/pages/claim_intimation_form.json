@@ -23,7 +23,7 @@
         "y": 40,
         "wires": [
             [
-                "sd_yT6rnZXFFNl3M5ml"
+                "sd_avKP1Ku3TKd5gMMD"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -43,7 +43,7 @@
         "globalVariables": [],
         "functionName": "sd_kXKGLk1w37hPFONv",
         "category": "Function",
-        "x": 685,
+        "x": 845,
         "y": 40,
         "wires": [
             []
@@ -380,7 +380,7 @@
         "script": "page.showContent = false;\npage.today=new Date();\nbh.local.lossCodeUrl=\"https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9\";\nbh.local.requestBody={\n  \"pageNumber\": 0,\n  \"pageSize\": 100,\n  \"filter\": {}\n}",
         "functionName": "sd_yT6rnZXFFNl3M5ml",
         "category": "Function",
-        "x": 145,
+        "x": 285,
         "y": 40,
         "wires": [
             [
@@ -487,7 +487,7 @@
         "paramMappingObj": {},
         "functionName": "sd_Wr9Ho0vseyisXZHa",
         "category": "HTTP",
-        "x": 245,
+        "x": 365,
         "y": 40,
         "wires": [
             [
@@ -509,7 +509,7 @@
         "script": "console.log(\"result=========>\",bh.local.result);\n\npage.lossTypeRecords = bh.local.result?.records || [];",
         "functionName": "sd_0PAYztpMzag6eRiT",
         "category": "Function",
-        "x": 345,
+        "x": 465,
         "y": 40,
         "wires": [
             [
@@ -531,7 +531,7 @@
         "script": "bh.local.partGroupUrl=\"https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/ae5e2b99-23c4-4ef5-b953-0d63a8e220df/63a1af97-18b4-4af1-b238-b35b0baf44ce\";\nbh.local.requestBodyForPartGroup={\n  \"pageNumber\": 0,\n  \"pageSize\": 100,\n  \"filter\": {}\n}",
         "functionName": "sd_YdSEN5cNt9Nb4OaH",
         "category": "Function",
-        "x": 440,
+        "x": 565,
         "y": 40,
         "wires": [
             [
@@ -638,7 +638,7 @@
         "paramMappingObj": {},
         "functionName": "sd_Ut2s5rmDrq4xCc39",
         "category": "HTTP",
-        "x": 525,
+        "x": 645,
         "y": 40,
         "wires": [
             [
@@ -660,7 +660,7 @@
         "script": "console.log(\"result data PArt=========>\",bh.local.resultForPartGroup);\n\npage.partGroup = bh.local.resultForPartGroup?.records || [];",
         "functionName": "sd_EMVaGfg9UubCkEXt",
         "category": "Function",
-        "x": 605,
+        "x": 745,
         "y": 40,
         "wires": [
             [
@@ -933,6 +933,68 @@
         "y": 200,
         "wires": [
             []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_avKP1Ku3TKd5gMMD",
+        "type": "UseDependency",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "client-pages",
+        "nodeType": "flow",
+        "name": "",
+        "inputs": 1,
+        "outputs": 1,
+        "property": "",
+        "propertyType": "bh",
+        "propertyGv": "bh.",
+        "alias": "",
+        "modules": [
+            {
+                "textIp": "NeutrinosOAuthClientService",
+                "typedIpValue": {
+                    "type": "this.page",
+                    "value": "noc"
+                },
+                "injectable": true
+            }
+        ],
+        "import_all": false,
+        "library": "neutrinos-oauth-client",
+        "serviceDesignerType": "pages",
+        "functionName": "sd_avKP1Ku3TKd5gMMD",
+        "category": "Function",
+        "x": 120,
+        "y": 40,
+        "wires": [
+            [
+                "sd_z32FIUzZS57J5mvA"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "claim_intimation_formComponent",
+        "generated": true
+    },
+    {
+        "id": "sd_z32FIUzZS57J5mvA",
+        "type": "Script",
+        "z": "sd_9WnerbnCPfrUZ6Rb",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "if (!page.noc.isLoggedIn) {\n\n    await page.noc.login(\"intimationform\")\n\n}",
+        "functionName": "sd_z32FIUzZS57J5mvA",
+        "category": "Function",
+        "x": 200,
+        "y": 40,
+        "wires": [
+            [
+                "sd_yT6rnZXFFNl3M5ml"
+            ]
         ],
         "__n_excludedFromValidation__": {},
         "generateNext": false,
