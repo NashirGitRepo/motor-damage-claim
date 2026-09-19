@@ -122,6 +122,7 @@ export class claim_intimation_formComponent {
       page.showContent = false;
       page.today = new Date();
       console.log('page today date ------>', page.today);
+      console.log(page.showContent);
       bh.local.lossCodeUrl =
         'https://reels-pt.neutrinos-apps.com/integration/api/records/filter/72b58c39-817f-4204-95dc-4f5eec8fd929/478c89b8-36bb-4fbe-96c5-1292a8054a2b/6f081239-f031-47e0-a9fd-6a5c1c75c4b9';
       bh.local.requestBody = {
