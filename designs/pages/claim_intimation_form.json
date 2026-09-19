@@ -19,11 +19,11 @@
         "name": "",
         "functionName": "sd_08aEHOpNqX0gjp5R",
         "category": "Lifecycle Events",
-        "x": 25,
+        "x": 85,
         "y": 40,
         "wires": [
             [
-                "sd_avKP1Ku3TKd5gMMD"
+                "sd_yT6rnZXFFNl3M5ml"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -939,68 +939,6 @@
         "y": 200,
         "wires": [
             []
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "claim_intimation_formComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_avKP1Ku3TKd5gMMD",
-        "type": "UseDependency",
-        "z": "sd_9WnerbnCPfrUZ6Rb",
-        "viewType": "client-pages",
-        "nodeType": "flow",
-        "name": "",
-        "inputs": 1,
-        "outputs": 1,
-        "property": "",
-        "propertyType": "bh",
-        "propertyGv": "bh.",
-        "alias": "",
-        "modules": [
-            {
-                "textIp": "NeutrinosOAuthClientService",
-                "typedIpValue": {
-                    "type": "this.page",
-                    "value": "noc"
-                },
-                "injectable": true
-            }
-        ],
-        "import_all": false,
-        "library": "neutrinos-oauth-client",
-        "serviceDesignerType": "pages",
-        "functionName": "sd_avKP1Ku3TKd5gMMD",
-        "category": "Function",
-        "x": 120,
-        "y": 40,
-        "wires": [
-            [
-                "sd_z32FIUzZS57J5mvA"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "claim_intimation_formComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_z32FIUzZS57J5mvA",
-        "type": "Script",
-        "z": "sd_9WnerbnCPfrUZ6Rb",
-        "viewType": "common",
-        "nodeType": "flow",
-        "name": "",
-        "script": "if (!page.noc.isLoggedIn) {\n\n    await page.noc.login(\"intimationform\")\n\n}",
-        "functionName": "sd_z32FIUzZS57J5mvA",
-        "category": "Function",
-        "x": 200,
-        "y": 40,
-        "wires": [
-            [
-                "sd_yT6rnZXFFNl3M5ml"
-            ]
         ],
         "__n_excludedFromValidation__": {},
         "generateNext": false,

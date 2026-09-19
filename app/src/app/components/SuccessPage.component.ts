@@ -8,7 +8,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'; //_splitter_
 import { SDPageCommonService } from 'app/n-services/sd-page-common.service'; //_splitter_
 import { SDBaseService } from 'app/n-services/SDBaseService'; //_splitter_
 import { NeuServiceInvokerService } from 'app/n-services/service-caller.service'; //_splitter_
-import { NeutrinosOAuthClientService } from 'neutrinos-oauth-client'; //_splitter_
 //append_imports_end
 
 @Component({
@@ -49,7 +48,7 @@ export class SuccessPageComponent {
 
   popClaimSuccsesPage(bh) {
     try {
-      bh = this.sd_dQuOWutFJHwWv9nZ(bh);
+      bh = this.sd_eFLFDKrYY6Opxqey(bh);
       //appendnew_next_popClaimSuccsesPage
       return bh;
     } catch (e) {
@@ -58,31 +57,6 @@ export class SuccessPageComponent {
   }
 
   //appendnew_flow_SuccessPageComponent_start
-
-  sd_dQuOWutFJHwWv9nZ(bh) {
-    try {
-      this.page.noc = this.__page_injector__.get(NeutrinosOAuthClientService);
-      bh = this.sd_QvGQDrmfqLh8H60d(bh);
-      //appendnew_next_sd_dQuOWutFJHwWv9nZ
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_dQuOWutFJHwWv9nZ');
-    }
-  }
-
-  async sd_QvGQDrmfqLh8H60d(bh) {
-    try {
-      const page = this.page;
-      if (!page.noc.isLoggedIn) {
-        await page.noc.login('intimationform');
-      }
-      bh = this.sd_eFLFDKrYY6Opxqey(bh);
-      //appendnew_next_sd_QvGQDrmfqLh8H60d
-      return bh;
-    } catch (e) {
-      return this.errorHandler(bh, e, 'sd_QvGQDrmfqLh8H60d');
-    }
-  }
 
   sd_eFLFDKrYY6Opxqey(bh) {
     try {

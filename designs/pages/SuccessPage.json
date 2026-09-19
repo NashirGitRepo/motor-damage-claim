@@ -23,11 +23,11 @@
         "pageVariables": [],
         "functionName": "popClaimSuccsesPage",
         "category": "Lifecycle Events",
-        "x": 65,
+        "x": 145,
         "y": 40,
         "wires": [
             [
-                "sd_dQuOWutFJHwWv9nZ"
+                "sd_eFLFDKrYY6Opxqey"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -76,68 +76,6 @@
         "wires": [
             [
                 "sd_juwOf9X1GxYLxKNf"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "SuccessPageComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_dQuOWutFJHwWv9nZ",
-        "type": "UseDependency",
-        "z": "sd_9JQAHv3hBjo59f34",
-        "viewType": "client-pages",
-        "nodeType": "flow",
-        "name": "",
-        "inputs": 1,
-        "outputs": 1,
-        "property": "",
-        "propertyType": "bh",
-        "propertyGv": "bh.",
-        "alias": "",
-        "modules": [
-            {
-                "textIp": "NeutrinosOAuthClientService",
-                "typedIpValue": {
-                    "type": "this.page",
-                    "value": "noc"
-                },
-                "injectable": true
-            }
-        ],
-        "import_all": false,
-        "library": "neutrinos-oauth-client",
-        "serviceDesignerType": "pages",
-        "functionName": "sd_dQuOWutFJHwWv9nZ",
-        "category": "Function",
-        "x": 185,
-        "y": 40,
-        "wires": [
-            [
-                "sd_QvGQDrmfqLh8H60d"
-            ]
-        ],
-        "__n_excludedFromValidation__": {},
-        "generateNext": false,
-        "serviceName": "SuccessPageComponent",
-        "generated": true
-    },
-    {
-        "id": "sd_QvGQDrmfqLh8H60d",
-        "type": "Script",
-        "z": "sd_9JQAHv3hBjo59f34",
-        "viewType": "common",
-        "nodeType": "flow",
-        "name": "",
-        "script": "if (!page.noc.isLoggedIn) {\n\n    await page.noc.login(\"intimationform\")\n\n}",
-        "functionName": "sd_QvGQDrmfqLh8H60d",
-        "category": "Function",
-        "x": 285,
-        "y": 40,
-        "wires": [
-            [
-                "sd_eFLFDKrYY6Opxqey"
             ]
         ],
         "__n_excludedFromValidation__": {},
